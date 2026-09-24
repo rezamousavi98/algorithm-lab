@@ -1,13 +1,13 @@
 .operation-explanation {
   margin: 13px 0;
   padding: 10px 11px;
-  border: 1px solid #37326c;
+  border: 1px solid var(--accent-border);
   border-radius: 7px;
-  background: #191736;
+  background: var(--accent);
 }
 
 .operation-label {
-  color: #a89cff;
+  color: var(--primary-text);
   font-size: 9px;
   font-weight: 650;
   letter-spacing: .07em;
@@ -16,7 +16,7 @@
 
 .operation-explanation p {
   margin-top: 5px;
-  color: #d0d1e7;
+  color: var(--accent-foreground);
   font-size: 11px;
   line-height: 1.5;
 }
@@ -147,9 +147,9 @@
 }
 
 .pseudocode-list li.active {
-  border-color: #4841a5;
-  background: #211e4c;
-  color: #f1efff;
+  border-color: var(--accent-border);
+  background: var(--accent);
+  color: var(--accent-foreground);
 }
 
 .pseudocode-list .line-number {
@@ -159,7 +159,7 @@
 }
 
 .pseudocode-list li.active .line-number {
-  color: #b4aaff;
+  color: var(--primary-text);
 }
 
 .pseudocode-list code {
@@ -177,7 +177,7 @@
 .complexity-note {
   margin-top: 18px;
   padding: 10px;
-  border-left: 2px solid #6358e8;
+  border-left: 2px solid var(--accent-border);
   background: #14172a;
 }
 
@@ -224,9 +224,9 @@
 }
 
 .inspector-tabs button.selected {
-  color: #f2f1ff;
-  background: #171638;
-  box-shadow: inset 0 -2px #7958ff;
+  color: var(--accent-foreground);
+  background: var(--accent);
+  box-shadow: inset 0 -2px var(--primary-glow);
 }
 
 .inspector-content {
@@ -274,7 +274,7 @@
 }
 
 .complexity.average b {
-  color: #bb8cff;
+  color: var(--primary-text);
 }
 
 .complexity.average {
@@ -319,9 +319,9 @@
 }
 
 :root[data-theme='light'] .inspector-tabs button.selected {
-  background: #ece9ff;
-  box-shadow: inset 0 -2px #725cf0;
-  color: #332581;
+  background: var(--accent);
+  box-shadow: inset 0 -2px var(--primary-glow);
+  color: var(--primary-text);
 }
 
 :root[data-theme='light'] .inspector-content h2 {
@@ -337,12 +337,12 @@
 }
 
 :root[data-theme='light'] .operation-explanation {
-  border-color: #d9d2ff;
-  background: #f5f3ff;
+  border-color: var(--accent-border);
+  background: var(--accent);
 }
 
 :root[data-theme='light'] .operation-label {
-  color: #5b46c8;
+  color: var(--primary-text);
 }
 
 :root[data-theme='light'] .operation-explanation p {
@@ -399,9 +399,9 @@
 }
 
 :root[data-theme='light'] .pseudocode-list li.active {
-  border-color: #c9c1ff;
-  background: #f0edff;
-  color: #29204f;
+  border-color: var(--accent-border);
+  background: var(--accent);
+  color: var(--primary-text);
 }
 
 :root[data-theme='light'] .pseudocode-list .line-number {
@@ -409,7 +409,7 @@
 }
 
 :root[data-theme='light'] .pseudocode-list li.active .line-number {
-  color: #5842cb;
+  color: var(--primary-text);
 }
 
 :root[data-theme='light'] .complexity {
@@ -442,11 +442,11 @@
 }
 
 :root[data-theme='light'] .complexity.space {
-  background: #f2f0ff;
+  background: var(--accent);
 }
 
 :root[data-theme='light'] .complexity.space b {
-  color: #5741c5;
+  color: var(--primary-text);
 }
 
 :root[data-theme='light'] .complexity-note {

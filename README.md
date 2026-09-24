@@ -50,7 +50,7 @@ Algorithm definitions and registry
 - `src/domain/preferences/` defines preference validation and a persistence interface; `src/infrastructure/` implements browser storage.
 - `src/features/sorting/` composes input controls, a simulation-state-only visualizer, and synchronized learning panels.
 - `src/domain/playback/` defines pure playback transitions and the generic timeline interface; `src/features/playback/` owns the timer and keyboard adapter.
-- `src/styles/` separates shell, controls, visualization, learning, recovery, and responsive styles. Algorithm colors use shared tokens in `src/index.css`.
+- `src/styles/` separates shell, controls, visualization, learning, recovery, and responsive styles. Theme and algorithm colors use shared tokens in `src/styles/theme.css`.
 - `src/components/` contains shared UI and workspace recovery components.
 
 Algorithm definitions emit semantic events into a deterministic execution history. The playback hook derives any timeline position from that history, so stepping backward and seeking do not rerun the algorithm. UI components render simulation state without owning algorithm logic or timers.
@@ -68,3 +68,9 @@ Add a sorting definition with its executor, short description, display order, an
 A future category supplies a `Timeline<TState>` (`totalSteps`, `getState`) and its own renderer. The generic playback controller does not import sorting state or snapshot storage. Key each workspace by execution identity to start a fresh playback session when input or algorithm changes.
 
 Playback time measures elapsed wall-clock time while playing. Pause, seek, and manual stepping do not add idle time; restarting or replaying clears it. It is distinct from execution step and operation counts.
+
+## Changing the primary color
+
+Edit `--brand-color` in `src/styles/theme.css` (currently `#684fff`). Button gradients, links, logo, selection backgrounds, navigation highlights, timeline accents, focus rings, and glow effects derive from this one value in both themes. Light-mode overrides adjust contrast rather than defining a separate brand color.
+
+The `--primary-*` and `--accent-*` variables can be adjusted for finer control. Neutral surfaces and semantic algorithm/status colors are independent. Check text contrast when choosing a substantially lighter brand color.

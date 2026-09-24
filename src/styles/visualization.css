@@ -182,7 +182,7 @@
   display: block;
   margin: 10px 0 6px;
   border-radius: 10px;
-  background: linear-gradient(to right, #6253f4 0 var(--timeline-progress), #30364a var(--timeline-progress) 100%);
+  background: linear-gradient(to right, var(--primary-highlight) 0 var(--timeline-progress), #30364a var(--timeline-progress) 100%);
   cursor: pointer;
 }
 
@@ -190,19 +190,19 @@
   appearance: none;
   width: 12px;
   height: 12px;
-  border: 2px solid #f2f1ff;
+  border: 2px solid var(--accent-border);
   border-radius: 50%;
-  background: #6253f4;
-  box-shadow: 0 0 0 3px #6253f444;
+  background: var(--primary-highlight);
+  box-shadow: 0 0 0 3px var(--primary-glow);
 }
 
 .execution-timeline input[type='range']::-moz-range-thumb {
   width: 10px;
   height: 10px;
-  border: 2px solid #f2f1ff;
+  border: 2px solid var(--accent-border);
   border-radius: 50%;
-  background: #6253f4;
-  box-shadow: 0 0 0 3px #6253f444;
+  background: var(--primary-highlight);
+  box-shadow: 0 0 0 3px var(--primary-glow);
 }
 
 .execution-timeline input[type='range']:disabled {
@@ -280,7 +280,7 @@
 }
 
 .auxiliary-values .more-values {
-  color: #a69bff;
+  color: var(--primary-text);
 }
 
 .completion-banner {
@@ -322,13 +322,13 @@
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  color: #aaa3ff;
+  color: var(--primary-text);
   font-size: 10px;
   text-decoration: none;
 }
 
 .completion-banner a:hover {
-  color: #ddd9ff;
+  color: var(--accent-foreground);
 }
 
 .sidebar-heading {
@@ -405,7 +405,7 @@
 }
 
 :root[data-theme='light'] .execution-timeline input[type='range'] {
-  background: linear-gradient(to right, #6551e8 0 var(--timeline-progress), #dce1ec var(--timeline-progress) 100%);
+  background: linear-gradient(to right, var(--primary-highlight) 0 var(--timeline-progress), #dce1ec var(--timeline-progress) 100%);
 }
 
 :root[data-theme='light'] .execution-timeline input[type='range']::-webkit-slider-thumb {
@@ -458,7 +458,7 @@
 }
 
 :root[data-theme='light'] .completion-banner a {
-  color: #5541c6;
+  color: var(--primary-text);
 }
 
 .active-range {

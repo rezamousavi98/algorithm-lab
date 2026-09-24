@@ -22,15 +22,15 @@
 }
 
 .button:hover {
-  border-color: #5149bd;
+  border-color: var(--accent-border);
 }
 
 .button.primary {
   min-width: 105px;
-  border-color: #6558fa;
-  background: linear-gradient(135deg, #6252ff, #4735db);
-  box-shadow: 0 4px 15px #5242f044;
-  color: white;
+  border-color: var(--primary-border);
+  background: linear-gradient(135deg, var(--primary), var(--primary-end));
+  box-shadow: 0 4px 15px var(--primary-glow);
+  color: var(--primary-foreground);
 }
 
 .button.generate {
@@ -319,14 +319,14 @@
 }
 
 :root[data-theme='light'] .button:hover {
-  border-color: #8879ea;
-  background: #faf9ff;
+  border-color: var(--accent-border);
+  background: var(--accent);
 }
 
 :root[data-theme='light'] .button.primary {
-  border-color: #5c48e6;
-  background: linear-gradient(135deg, #6f5aff, #5540dc);
-  color: #fff;
+  border-color: var(--primary-border);
+  background: linear-gradient(135deg, var(--primary), var(--primary-end));
+  color: var(--primary-foreground);
 }
 
 :root[data-theme='light'] .control-select {

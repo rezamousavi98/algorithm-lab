@@ -1,0 +1,67 @@
+/* Change this one color to recolor branding and interaction accents in both themes.
+   Semantic algorithm/status colors remain independent. */
+:root {
+  --brand-color: #684fff;
+
+  --primary: color-mix(in srgb, var(--brand-color) 82%, black);
+  --primary-foreground: #ffffff;
+  --primary-end: color-mix(in srgb, var(--brand-color) 65%, black);
+  --primary-border: var(--brand-color);
+  --primary-highlight: color-mix(in srgb, var(--brand-color) 72%, white);
+  --primary-text: color-mix(in srgb, var(--brand-color) 45%, white);
+  --primary-glow: color-mix(in srgb, var(--brand-color) 27%, transparent);
+  --primary-glow-strong: color-mix(in srgb, var(--brand-color) 53%, transparent);
+  --accent: color-mix(in srgb, var(--brand-color) 18%, var(--card));
+  --accent-border: color-mix(in srgb, var(--brand-color) 45%, var(--border));
+  --accent-foreground: color-mix(in srgb, var(--brand-color) 8%, white);
+  --ring: var(--primary-highlight);
+  --selection-background: color-mix(in srgb, var(--brand-color) 35%, transparent);
+  --background: #080b12;
+  --foreground: #eef0fb;
+  --card: #0d111a;
+  --card-foreground: #eef0fb;
+  --popover: #111722;
+  --popover-foreground: #eef0fb;
+  --secondary: #111722;
+  --secondary-foreground: #dce0f1;
+  --muted: #171b2c;
+  --muted-foreground: #929bb8;
+  --destructive: #f05a79;
+  --border: #1d2633;
+  --input: #1d2633;
+  --radius: 0.7rem;
+  --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --algorithm-comparing: #ff9e42;
+  --algorithm-pivot: #ed3f78;
+  --algorithm-swapping: #7956ff;
+  --algorithm-selected: #b17bff;
+  --algorithm-sorted: #20c997;
+  --algorithm-unsorted: #747f9f;
+
+  color-scheme: dark;
+}
+
+:root[data-theme='light'] {
+  --primary-highlight: var(--primary);
+  --primary-text: color-mix(in srgb, var(--brand-color) 65%, black);
+  --accent: color-mix(in srgb, var(--brand-color) 8%, var(--card));
+  --accent-border: color-mix(in srgb, var(--brand-color) 25%, var(--border));
+  --accent-foreground: color-mix(in srgb, var(--brand-color) 45%, black);
+  --ring: var(--primary);
+  --background: #f5f6fc;
+  --foreground: #172039;
+  --card: #ffffff;
+  --card-foreground: #172039;
+  --popover: #ffffff;
+  --popover-foreground: #172039;
+  --secondary: #eceefa;
+  --secondary-foreground: #303854;
+  --muted: #eceefa;
+  --muted-foreground: #66708c;
+  --destructive: #c83f60;
+  --border: #dfe2ef;
+  --input: #dfe2ef;
+  --algorithm-unsorted: #8995b2;
+  color-scheme: light;
+}
+
