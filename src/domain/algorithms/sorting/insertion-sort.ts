@@ -45,6 +45,8 @@ function* execute(input: SortingInput) {
 
 export const insertionSort = defineSortingAlgorithm({
   id: 'insertion-sort',
+  shortDescription: 'Build sorted array',
+  displayOrder: 5,
   name: 'Insertion Sort',
   description: 'Grows a sorted prefix by inserting each next value into its correct position.',
   useCases: ['Small arrays', 'Nearly sorted or continuously updated data'],

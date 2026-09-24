@@ -1,62 +1,18 @@
 @import 'tailwindcss';
 @import 'tw-animate-css';
+@import './styles/theme.css';
 
 @custom-variant dark (&:is(.dark *));
 
 :root {
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  color: #eef0fb;
-  background: #080b12;
+  color: var(--foreground);
+  background: var(--background);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  --background: #080b12;
-  --foreground: #eef0fb;
-  --card: #0d111a;
-  --card-foreground: #eef0fb;
-  --popover: #111722;
-  --popover-foreground: #eef0fb;
-  --primary: #684fff;
-  --primary-foreground: #ffffff;
-  --secondary: #111722;
-  --secondary-foreground: #dce0f1;
-  --muted: #171b2c;
-  --muted-foreground: #929bb8;
-  --accent: #201a4d;
-  --accent-foreground: #f4f3ff;
-  --destructive: #f05a79;
-  --border: #1d2633;
-  --input: #1d2633;
-  --ring: #8067ff;
-  --radius: 0.7rem;
-
-  color-scheme: dark;
-}
-
-:root[data-theme='light'] {
-  color: #172039;
-  background: #f5f6fc;
-  --background: #f5f6fc;
-  --foreground: #172039;
-  --card: #ffffff;
-  --card-foreground: #172039;
-  --popover: #ffffff;
-  --popover-foreground: #172039;
-  --primary: #4c3ce8;
-  --primary-foreground: #ffffff;
-  --secondary: #eceefa;
-  --secondary-foreground: #303854;
-  --muted: #eceefa;
-  --muted-foreground: #66708c;
-  --accent: #e5e3ff;
-  --accent-foreground: #3426b1;
-  --destructive: #c83f60;
-  --border: #dfe2ef;
-  --input: #dfe2ef;
-  --ring: #6355e8;
-  color-scheme: light;
 }
 
 * { box-sizing: border-box; }
@@ -69,13 +25,13 @@ body {
   color: var(--foreground);
 }
 
-button, input, select { font: inherit; }
+button, input, select, textarea { font: inherit; }
 button { color: inherit; }
-button:focus-visible, input:focus-visible, select:focus-visible, a:focus-visible {
+button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible, a:focus-visible {
   outline: 2px solid var(--ring);
   outline-offset: 2px;
 }
-::selection { background: #5c50ec77; }
+::selection { background: var(--selection-background); }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }

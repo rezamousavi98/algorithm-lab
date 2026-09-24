@@ -1,39 +1,43 @@
-import { ArrowRight } from 'lucide-react'
-import type { SortingExecution } from '@/domain/simulation/sorting-execution'
-import type { useSortingPlayback } from './use-sorting-playback'
-import { ExecutionTimeline, MetricsStrip } from './execution-timeline'
+import type { SortingVisualizationState } from '@/domain/algorithms/types'
+import { AuxiliaryPanels } from './auxiliary-panels'
 
-type SortingVisualizerProps = Readonly<{ execution: SortingExecution; playback: ReturnType<typeof useSortingPlayback>; onGenerate: () => void }>
-
-function getBarState(index: number, execution: SortingExecution, currentStep: number) {
-  const state = execution.snapshots[currentStep]
+function getBarState(index: number, state: SortingVisualizationState) {
   const event = state.activeEvent
   if (event?.type === 'swap' && event.indices.includes(index)) return 'swapping'
   if (event?.type === 'write' && event.index === index) return 'writing'
   if (event?.type === 'compare' && state.comparedIndices.includes(index)) return 'comparing'
+  if (state.sortedIndices.includes(index)) return 'sorted'
   if (state.pivotIndex === index) return 'pivot'
   if (state.selectedIndices.includes(index)) return 'selected'
-  if (state.sortedIndices.includes(index)) return 'sorted'
   return 'unsorted'
 }
 
-export function SortingVisualizer({ execution, playback, onGenerate }: SortingVisualizerProps) {
-  const { simulation, state, totalSteps, seek, reset, play } = playback
+const STATES = ['comparing', 'pivot', 'swapping', 'selected', 'sorted', 'unsorted'] as const
+
+/** Renders a single simulation state, independently of its timeline storage. */
+export function SortingVisualizer({ simulation }: Readonly<{ simulation: SortingVisualizationState }>) {
   const minValue = Math.min(...simulation.values, 0)
   const maxValue = Math.max(...simulation.values, 1)
-  const valueRange = maxValue - minValue || 1
-  return <div className="visualizer-panel">
-    <div className="chart-topline"><div className="legend"><span><i className="legend-swatch comparing"/>Comparing</span><span><i className="legend-swatch pivot"/>Pivot</span><span><i className="legend-swatch swapping"/>Swapping</span><span><i className="legend-swatch sorted"/>Sorted</span><span><i className="legend-swatch unsorted"/>Unsorted</span></div><div className="step-counter">Step <strong>{state.currentStep.toLocaleString()}</strong><span>/</span>{totalSteps.toLocaleString()}</div></div>
+  // Scale before subtraction so finite values near Number.MAX_VALUE do not overflow.
+  const scale = Math.max(Math.abs(minValue), Math.abs(maxValue), 1)
+  const minimum = minValue / scale
+  const range = maxValue / scale - minimum || 1
+  const activeRange = simulation.activeRange
+  return <>
+    <div className="legend">
+      {STATES.map((name) => <span key={name}><i className={`legend-swatch ${name}`} />{name === 'swapping' ? 'Swapping / writing' : name[0].toUpperCase() + name.slice(1)}</span>)}
+    </div>
+    {activeRange && <p className="active-range" role="status">Active range: positions {activeRange[0]}–{activeRange[1]}</p>}
     <div className="bars" role="list" aria-label="Array visualization">
       {simulation.values.map((value, index) => {
-        const barState = getBarState(index, execution, state.currentStep)
-        const height = `${Math.max(7, ((value - minValue) / valueRange) * 91 + 6)}%`
-        return <div key={index} role="listitem" aria-label={`Index ${index}, value ${value}, ${barState}`} title={`Index ${index} · ${value} · ${barState}`} className={`bar bar-${barState}`} style={{ height }}/>
+        const barState = getBarState(index, simulation)
+        const inRange = activeRange !== null && index >= activeRange[0] && index <= activeRange[1]
+        const height = `${Math.max(7, ((value / scale - minimum) / range) * 91 + 6)}%`
+        const label = `Index ${index}, value ${value}, ${barState}${inRange ? ', in active range' : ''}`
+        return <div key={index} role="listitem" aria-label={label} title={label}
+          className={`bar bar-${barState}${inRange ? ' in-active-range' : ''}`} style={{ height }} />
       })}
     </div>
-    {simulation.auxiliaryPanels.length > 0 && <div className="auxiliary-panels" aria-label="Auxiliary algorithm state">{simulation.auxiliaryPanels.map((panel) => <div className="auxiliary-panel" key={panel.id}><strong>{panel.label}</strong><span className="auxiliary-count">{panel.values.length} values</span><div className="auxiliary-values" aria-label={`${panel.label}, ${panel.values.length} values`}>{panel.values.slice(0, 80).map((value, index) => <span key={`${index}-${value}`}>{value}</span>)}{panel.values.length > 80 && <span className="more-values">+{panel.values.length - 80} more</span>}</div></div>)}</div>}
-    {state.status === 'completed' && <div className="completion-banner" role="status"><div><strong>Sorted successfully</strong><span>{simulation.values.length} values · {totalSteps.toLocaleString()} execution steps</span></div><button className="button" onClick={() => { reset(); play() }}>Replay</button><button className="button" onClick={onGenerate}>New array</button><a href="#sorting-algorithms">Try another algorithm <ArrowRight size={13}/></a></div>}
-    <MetricsStrip metrics={simulation.metrics}/><ExecutionTimeline currentStep={state.currentStep} totalSteps={totalSteps} onSeek={seek}/>
-    <div className="playback-hint">Keyboard: <kbd>Space</kbd> play/pause <kbd>←</kbd> <kbd>→</kbd> step <kbd>R</kbd> restart</div>
-  </div>
+    <AuxiliaryPanels panels={simulation.auxiliaryPanels} />
+  </>
 }

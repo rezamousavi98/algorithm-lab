@@ -50,6 +50,8 @@ function* execute(input: SortingInput): Generator<AlgorithmEvent, void, undefine
 
 export const shellSort = defineSortingAlgorithm({
   id: 'shell-sort',
+  shortDescription: 'Gap insertion',
+  displayOrder: 6,
   name: 'Shell Sort',
   description: 'Moves values across shrinking gaps before finishing with insertion sort.',
   useCases: ['Medium-sized arrays', 'In-place sorting with a compact implementation'],

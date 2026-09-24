@@ -1,6 +1,6 @@
-import type { AlgorithmDefinition, AlgorithmEvent, SortingInput, SortingVisualizationState } from '@/domain/algorithms/types'
+import type { AlgorithmLearningContent, SortingVisualizationState } from '@/domain/algorithms/types'
 
-type Algorithm = AlgorithmDefinition<SortingInput, AlgorithmEvent>
+type Algorithm = AlgorithmLearningContent
 
 function describeOperation(state: SortingVisualizationState, algorithm: Algorithm): string {
   const event = state.activeEvent

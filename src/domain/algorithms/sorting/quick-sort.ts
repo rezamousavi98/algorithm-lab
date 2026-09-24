@@ -60,6 +60,8 @@ function* execute(input: SortingInput): Generator<AlgorithmEvent, void, undefine
 
 export const quickSort = defineSortingAlgorithm({
   id: 'quick-sort',
+  shortDescription: 'Divide and conquer',
+  displayOrder: 0,
   name: 'Quick Sort',
   description: 'Partitions values around a pivot and recursively sorts the two resulting ranges.',
   useCases: ['General-purpose in-memory sorting', 'Large arrays when average-case speed matters'],

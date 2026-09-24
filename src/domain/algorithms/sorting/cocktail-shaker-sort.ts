@@ -54,6 +54,8 @@ function* execute(input: SortingInput) {
 
 export const cocktailShakerSort = defineSortingAlgorithm({
   id: 'cocktail-shaker-sort',
+  shortDescription: 'Bidirectional bubble',
+  displayOrder: 9,
   name: 'Cocktail Shaker Sort',
   description: 'Bubble sort in both directions, moving small and large values toward their ends.',
   useCases: ['Teaching bidirectional passes', 'Small arrays with values misplaced near either end'],
