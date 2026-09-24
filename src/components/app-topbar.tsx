@@ -12,7 +12,7 @@ export function AppTopbar({ theme, onThemeToggle }: AppTopbarProps) {
   return <header className="topbar">
     <Brand />
     <nav className="category-nav" aria-label="Algorithm categories">
-      {categories.map((category, index) => <button key={category} className={index === 0 ? 'active' : ''} aria-current={index === 0 ? 'page' : undefined} disabled={index !== 0}>{category}</button>)}
+      {categories.map((category, index) => <button key={category} className={index === 0 ? 'active' : ''} aria-current={index === 0 ? 'page' : undefined} disabled={index !== 0}><span>{category}</span>{index !== 0 && <small className="soon-badge">Soon</small>}</button>)}
     </nav>
     <div className="topbar-actions"><button className="icon-button" aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`} onClick={onThemeToggle}>{theme === 'dark' ? <Moon/> : <Sun/>}</button></div>
   </header>
