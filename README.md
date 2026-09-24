@@ -1,32 +1,59 @@
-# React + TypeScript + Vite
+# Algorithm Lab
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+An interactive, local-first learning tool for understanding algorithms through visual execution. Version 1 focuses on sorting: watch operations, inspect pseudocode and variables, and replay execution step by step.
 
-Currently, two official plugins are available:
+## Getting started
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Requirements: Node.js 20.19+ or 22.12+ and npm.
 
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+```sh
+npm install
+npm run dev
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+Vite prints the local URL after the development server starts. To check the production build and lint the project:
+
+```sh
+npm run build
+npm run lint
+```
+
+To serve the production build locally, run `npm run build` followed by `npm run preview`.
+
+## Using the app
+
+- Choose one of the ten sorting algorithms from the catalog.
+- Generate random, nearly sorted, reversed, or few-unique data, or enter comma-separated values.
+- Play, pause, step backward or forward, seek through the timeline, adjust playback speed, reset, or jump to the end.
+- Follow the current operation, algorithm variables, pseudocode, operation metrics, and complexity details in the learning inspector.
+- Switch between dark and light themes. Theme, speed, array size, and the selected algorithm are saved in browser local storage.
+
+Counting Sort accepts safe integers with a bounded distinct-value range. Radix Sort accepts safe integers, including negative values. Input validation displays algorithm-specific constraints before execution.
+
+## Architecture
+
+The app keeps algorithm execution independent from React presentation:
+
+```text
+Algorithm definitions and registry
+              ↓
+       Semantic events
+              ↓
+ Reducer and execution history
+              ↓
+ Playback controller and React views
+```
+
+- `src/domain/algorithms/` contains shared contracts, the sorting registry, algorithm definitions, input creation, and input validation.
+- `src/domain/simulation/` contains the pure event reducer, execution sessions, snapshots, and derived metrics.
+- `src/domain/preferences/` loads and saves local user preferences.
+- `src/features/sorting/` contains playback orchestration, visualization controls, and synchronized learning panels.
+- `src/components/` contains shared UI and workspace recovery components.
+
+Algorithm definitions emit semantic events into a deterministic execution history. The playback hook derives any timeline position from that history, so stepping backward and seeking do not rerun the algorithm. UI components render simulation state without owning algorithm logic or timers.
+
+## V1 scope
+
+Included: Bubble, Selection, Insertion, Merge, Quick, Heap, Shell, Counting, Radix, and Cocktail Shaker Sort; generated and manual inputs; deterministic timeline playback; dark/light themes; responsive layout; local preferences; and workspace error recovery.
+
+Searching, graphs, trees, pathfinding, recursion, dynamic programming, accounts, cloud sync, and algorithm races are future scope. Automated tests are not part of V1; verification currently uses the production build and Oxlint.
