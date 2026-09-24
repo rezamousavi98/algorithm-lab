@@ -3,6 +3,8 @@ import type { SortingExecution } from '@/domain/simulation/sorting-execution'
 import type { ManualInputResult, SortingPattern } from '@/domain/algorithms/sorting/input'
 import { ExecutionSurface } from './execution-controls'
 import { LearningInspector } from './learning-inspector'
+import { WorkspaceActions } from './workspace-actions'
+import { AppFooter } from '@/components/app-footer'
 import { useSortingPlayback } from './use-sorting-playback'
 
 type SortingWorkspaceProps = Readonly<{
@@ -52,25 +54,13 @@ export function SortingWorkspace({
           <div className="heading-row"><h1>{algorithm.name}</h1><span className={`active-pill status-${playback.state.status}`}><i />{playback.state.status === 'playing' ? 'Running' : playback.state.status === 'completed' ? 'Complete' : playback.state.status === 'paused' ? 'Paused' : 'Ready'}</span></div>
           <p className="algorithm-description">{algorithm.description}</p>
         </div>
-        <ExecutionSurface
-          execution={execution}
-          playback={playback}
-          arraySize={arraySize}
-          pattern={pattern}
-          inputMode={inputMode}
-          manualDraft={manualDraft}
-          manualError={manualError}
-          executionError={executionError}
-          onArraySizeChange={onArraySizeChange}
-          onPatternChange={onPatternChange}
-          onInputModeChange={onInputModeChange}
-          onManualDraftChange={onManualDraftChange}
-          onApplyManual={onApplyManual}
-          onGenerate={onGenerate}
-          onSpeedChange={onSpeedChange}
-        />
+        <ExecutionSurface execution={execution} playback={playback} executionError={executionError} onGenerate={onGenerate}/>
+        <AppFooter />
       </div>
-      <LearningInspector algorithm={algorithm} simulation={playback.simulation} status={playback.state.status} />
+      <div className="workspace-aside">
+        <WorkspaceActions playback={playback} arraySize={arraySize} pattern={pattern} inputMode={inputMode} manualDraft={manualDraft} manualError={manualError} onArraySizeChange={onArraySizeChange} onPatternChange={onPatternChange} onInputModeChange={onInputModeChange} onManualDraftChange={onManualDraftChange} onApplyManual={onApplyManual} onGenerate={onGenerate} onSpeedChange={onSpeedChange}/>
+        <LearningInspector algorithm={algorithm} simulation={playback.simulation} status={playback.state.status}/>
+      </div>
     </section>
   )
 }

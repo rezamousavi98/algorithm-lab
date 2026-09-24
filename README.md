@@ -22,7 +22,7 @@ To serve the production build locally, run `npm run build` followed by `npm run 
 
 ## Using the app
 
-- Choose one of the ten sorting algorithms from the catalog.
+- Choose one of the ten sorting algorithms from the left sidebar. The top navigation shows the future algorithm categories; Sorting is the V1 category.
 - Generate random, nearly sorted, reversed, or few-unique data, or enter comma-separated values.
 - Play, pause, step backward or forward, seek through the timeline, adjust playback speed, reset, or jump to the end.
 - Follow the current operation, algorithm variables, pseudocode, operation metrics, and complexity details in the learning inspector.

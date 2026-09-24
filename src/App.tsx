@@ -3,7 +3,6 @@ import { createSortingExecution, type SortingExecution } from '@/domain/simulati
 import { AppSidebar } from '@/components/app-sidebar'
 import { AppTopbar } from '@/components/app-topbar'
 import { WorkspaceErrorBoundary } from '@/components/workspace-error-boundary'
-import { AlgorithmCatalog, AppFooter } from '@/features/sorting/algorithm-catalog'
 import { SortingWorkspace } from '@/features/sorting/sorting-workspace'
 import { useAlgorithmLab } from '@/features/sorting/use-algorithm-lab'
 import './App.css'
@@ -16,9 +15,9 @@ export default function App() {
   const lab = useAlgorithmLab()
 
   return <div className="app-shell">
-    <AppSidebar />
+    <AppTopbar theme={lab.theme} onThemeToggle={lab.toggleTheme} />
+    <AppSidebar selectedId={lab.selectedId} onSelect={lab.selectAlgorithm} />
     <main className="main-area">
-      <AppTopbar theme={lab.theme} onThemeToggle={lab.toggleTheme} />
       <WorkspaceErrorBoundary key={`${lab.selectedId}-${lab.runVersion}`}>
         <SortingWorkspace
           algorithm={lab.algorithm}
@@ -39,8 +38,6 @@ export default function App() {
           onSpeedChange={lab.setSpeed}
         />
       </WorkspaceErrorBoundary>
-      <AlgorithmCatalog selectedId={lab.selectedId} onSelect={lab.selectAlgorithm} />
-      <AppFooter />
     </main>
   </div>
 }

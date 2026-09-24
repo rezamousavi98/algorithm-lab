@@ -1,20 +1,26 @@
-import { Boxes, Database, GitBranch, Lightbulb, Search, SlidersHorizontal } from 'lucide-react'
+import { BarChart3 } from 'lucide-react'
+import { algorithmRegistry } from '@/domain/algorithms/registry'
 
-function Brand() {
-  return <div className="brand"><div className="brand-mark"><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M20 4 37 33H3L20 4Z"/><circle cx="20" cy="24" r="4"/></svg></div><div><strong>Algorithm Lab</strong><span>Visualize. Understand. Explore.</span></div></div>
+const subtitleById: Readonly<Record<string, string>> = {
+  'quick-sort': 'Divide and conquer', 'merge-sort': 'Divide and conquer', 'heap-sort': 'Binary heap',
+  'bubble-sort': 'Simple comparison', 'selection-sort': 'Find minimum', 'insertion-sort': 'Build sorted array',
+  'shell-sort': 'Gap insertion', 'counting-sort': 'Count occurrences', 'radix-sort': 'Sort by digits',
+  'cocktail-shaker-sort': 'Bidirectional bubble',
 }
+const sidebarOrder = ['quick-sort', 'merge-sort', 'heap-sort', 'bubble-sort', 'selection-sort', 'insertion-sort', 'shell-sort', 'counting-sort', 'radix-sort', 'cocktail-shaker-sort']
 
-export function AppSidebar() {
-  return <aside className="sidebar">
-    <Brand />
-    <nav className="side-nav" aria-label="Main navigation">
-      <button className="nav-item active"><SlidersHorizontal /><span>Sorting Algorithms</span></button>
-      <button className="nav-item disabled" disabled><Search /><span>Searching Algorithms</span></button>
-      <button className="nav-item disabled" disabled><GitBranch /><span>Graph Algorithms</span></button>
-      <button className="nav-item disabled" disabled><Database /><span>Data Structures</span></button>
-      <button className="nav-item disabled" disabled><Boxes /><span>Coming Soon</span></button>
+type AppSidebarProps = Readonly<{ selectedId: string; onSelect: (algorithmId: string) => void }>
+
+export function AppSidebar({ selectedId, onSelect }: AppSidebarProps) {
+  const algorithms = [...algorithmRegistry.definitions].sort((first, second) => sidebarOrder.indexOf(first.id) - sidebarOrder.indexOf(second.id))
+  return <aside className="sidebar" aria-label="Sorting algorithms">
+    <div className="sidebar-heading"><h2>Sorting Algorithms</h2><span>{algorithms.length}</span></div>
+    <nav className="algorithm-nav" aria-label="Choose a sorting algorithm">
+      {algorithms.map((algorithm, index) => <button key={algorithm.id} className={`algorithm-nav-item ${selectedId === algorithm.id ? 'selected' : ''}`} aria-current={selectedId === algorithm.id ? 'page' : undefined} onClick={() => onSelect(algorithm.id)}>
+        <span className={`algorithm-nav-icon mini-${index % 4}`}><BarChart3 size={20}/></span>
+        <span className="algorithm-nav-copy"><strong>{algorithm.name}</strong><small>{subtitleById[algorithm.id] ?? algorithm.category}</small></span>
+        <span className="algorithm-nav-complexity">{algorithm.complexity.average}</span>
+      </button>)}
     </nav>
-    <div className="sidebar-note"><Lightbulb /><div><strong>Built for curious minds.</strong><p>Explore algorithms visually and build a deeper intuition for how they work.</p></div></div>
-    <div className="sidebar-bottom"><span className="status-dot" /> Interactive learning lab <span>v1.0</span></div>
   </aside>
 }
