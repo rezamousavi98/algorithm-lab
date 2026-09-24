@@ -39,6 +39,8 @@ function* execute(input: SortingInput) {
 
 export const selectionSort = defineSortingAlgorithm({
   id: 'selection-sort',
+  shortDescription: 'Find minimum',
+  displayOrder: 4,
   name: 'Selection Sort',
   description: 'Finds the smallest remaining value and places it at the next sorted position.',
   useCases: ['Small arrays', 'Situations where minimizing writes is useful'],

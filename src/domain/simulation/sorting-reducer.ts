@@ -123,9 +123,13 @@ export function reduceSortingEvent(
     }
     case 'markSorted': {
       event.indices.forEach((index) => assertIndex(index, state.values.length, event.type))
+      const sortedIndices = Object.freeze([...new Set([...state.sortedIndices, ...event.indices])])
       nextState = {
         ...state,
-        sortedIndices: Object.freeze([...new Set([...state.sortedIndices, ...event.indices])]),
+        sortedIndices,
+        ...(sortedIndices.length === state.values.length ? {
+          activeRange: null, pivotIndex: null, selectedIndices: Object.freeze([]),
+        } : {}),
       }
       break
     }

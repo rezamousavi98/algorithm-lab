@@ -39,6 +39,8 @@ function* execute(input: SortingInput): Generator<AlgorithmEvent, void, undefine
 
 export const bubbleSort = defineSortingAlgorithm({
   id: 'bubble-sort',
+  shortDescription: 'Simple comparison',
+  displayOrder: 3,
   name: 'Bubble Sort',
   description: 'Repeatedly compares adjacent values and moves larger values toward the end.',
   useCases: ['Teaching adjacent comparisons and swaps', 'Small or nearly sorted arrays'],

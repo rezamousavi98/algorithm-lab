@@ -1,8 +1,8 @@
 import { FastForward, Pause, Play, RotateCcw, StepBack, StepForward } from 'lucide-react'
-import { useSortingPlayback } from './use-sorting-playback'
+import type { PlaybackTransport } from '@/domain/playback/types'
 
-const SPEEDS = [0.25, 0.5, 1, 2, 4]
-type PlaybackControlsProps = Readonly<{ playback: ReturnType<typeof useSortingPlayback>; onSpeedChange: (speed: number) => void; compact?: boolean }>
+import { SPEED_OPTIONS } from '@/domain/preferences/user-preferences'
+type PlaybackControlsProps = Readonly<{ playback: PlaybackTransport; onSpeedChange: (speed: number) => void; compact?: boolean }>
 
 export function PlaybackControls({ playback, onSpeedChange, compact = false }: PlaybackControlsProps) {
   const { state, play, pause, reset, stepBackward, stepForward, jumpToEnd, setSpeed } = playback
@@ -15,6 +15,6 @@ export function PlaybackControls({ playback, onSpeedChange, compact = false }: P
       <button className="button step-control" onClick={stepForward} disabled={state.currentStep >= playback.totalSteps} aria-label="Next step"><StepForward size={16}/><span className={compact ? 'compact-action-label' : undefined}>Next</span></button>
       <button className="button end-control" onClick={jumpToEnd} disabled={state.currentStep >= playback.totalSteps} aria-label="Jump to end"><FastForward size={16}/><span className={compact ? 'compact-action-label' : undefined}>End</span></button>
     </div>
-    <label className="control-select speed-select"><span>Speed</span><select value={state.speed} aria-label="Playback speed" onChange={(event) => { const speed = Number(event.target.value); setSpeed(speed); onSpeedChange(speed) }}>{SPEEDS.map((speed) => <option value={speed} key={speed}>{speed}×</option>)}</select><span className="select-caret">⌄</span></label>
+    <label className="control-select speed-select"><span>Speed</span><select value={state.speed} aria-label="Playback speed" onChange={(event) => { const speed = Number(event.target.value); setSpeed(speed); onSpeedChange(speed) }}>{SPEED_OPTIONS.map((speed) => <option value={speed} key={speed}>{speed}×</option>)}</select><span className="select-caret">⌄</span></label>
   </>
 }

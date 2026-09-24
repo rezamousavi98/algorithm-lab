@@ -65,6 +65,8 @@ function* execute(input: SortingInput) {
 
 export const countingSort = defineSortingAlgorithm({
   id: 'counting-sort',
+  shortDescription: 'Count occurrences',
+  displayOrder: 7,
   name: 'Counting Sort',
   description: 'Counts integer frequencies, then uses cumulative positions to order the values.',
   useCases: ['Integer values in a small, bounded range', 'Sorting without comparisons'],

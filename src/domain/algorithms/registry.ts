@@ -11,6 +11,8 @@ export type AlgorithmRegistryEntry = Pick<
   | 'name'
   | 'category'
   | 'description'
+  | 'shortDescription'
+  | 'displayOrder'
   | 'useCases'
   | 'complexity'
   | 'stable'

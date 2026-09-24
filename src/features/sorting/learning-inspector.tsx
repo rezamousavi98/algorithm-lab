@@ -1,10 +1,10 @@
 import { useState, type KeyboardEvent } from 'react'
-import type { AlgorithmDefinition, AlgorithmEvent, PlaybackStatus, SortingInput, SortingVisualizationState } from '@/domain/algorithms/types'
+import type { AlgorithmLearningContent, PlaybackStatus, SortingVisualizationState } from '@/domain/algorithms/types'
 import { ComplexityPanel, OverviewPanel, PseudocodePanel } from './learning-panels'
 
 type InspectorTab = 'overview' | 'pseudocode' | 'complexity'
 const TABS: readonly InspectorTab[] = ['overview', 'pseudocode', 'complexity']
-type LearningInspectorProps = Readonly<{ algorithm: AlgorithmDefinition<SortingInput, AlgorithmEvent>; simulation: SortingVisualizationState; status: PlaybackStatus }>
+type LearningInspectorProps = Readonly<{ algorithm: AlgorithmLearningContent; simulation: SortingVisualizationState; status: PlaybackStatus }>
 
 export function LearningInspector({ algorithm, simulation, status }: LearningInspectorProps) {
   const [tab, setTab] = useState<InspectorTab>('overview')

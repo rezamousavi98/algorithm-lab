@@ -56,6 +56,8 @@ function* execute(input: SortingInput): Generator<AlgorithmEvent, void, undefine
 
 export const heapSort = defineSortingAlgorithm({
   id: 'heap-sort',
+  shortDescription: 'Binary heap',
+  displayOrder: 2,
   name: 'Heap Sort',
   description: 'Builds a max heap, then repeatedly moves its largest value to the end.',
   useCases: ['In-place sorting with O(n log n) worst-case time', 'Priority-queue and heap learning'],

@@ -127,7 +127,7 @@ export type PlaybackStatus = 'idle' | 'playing' | 'paused' | 'completed'
 /** Data contract for a materialized run; timeline behavior is implemented in the next step. */
 export type ExecutionSession<
   TInput = unknown,
-  TEvent extends AlgorithmEvent = AlgorithmEvent,
+  TEvent extends Readonly<{ type: string }> = AlgorithmEvent,
 > = Readonly<{
   algorithmId: string
   input: TInput
@@ -169,12 +169,14 @@ export type SortingVisualizationState = Readonly<{
 
 export type AlgorithmDefinition<
   TInput = unknown,
-  TEvent extends AlgorithmEvent = AlgorithmEvent,
+  TEvent extends Readonly<{ type: string }> = AlgorithmEvent,
 > = Readonly<{
   id: string
   name: string
   category: AlgorithmCategory
   description: string
+  shortDescription: string
+  displayOrder: number
   useCases: readonly string[]
   complexity: Complexity
   stable: boolean
@@ -183,3 +185,10 @@ export type AlgorithmDefinition<
   validateInput?: (input: Readonly<TInput>) => string | null
   execute: (input: Readonly<TInput>) => Iterable<TEvent>
 }>
+
+/** Educational views do not need access to the executable algorithm. */
+export type AlgorithmLearningContent = Pick<AlgorithmDefinition,
+  'id' | 'name' | 'description' | 'useCases' | 'complexity' | 'stable' | 'inPlace' | 'pseudocode'>
+
+export type AlgorithmSummary = Pick<AlgorithmDefinition,
+  'id' | 'name' | 'shortDescription' | 'displayOrder' | 'complexity'>

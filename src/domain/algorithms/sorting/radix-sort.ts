@@ -65,6 +65,8 @@ function* execute(input: SortingInput) {
 
 export const radixSort = defineSortingAlgorithm({
   id: 'radix-sort',
+  shortDescription: 'Sort by digits',
+  displayOrder: 8,
   name: 'Radix Sort',
   description: 'Sorts safe integers by stable digit passes after offsetting negative values.',
   useCases: ['Integer keys with a bounded number of digits', 'Non-comparison sorting demonstrations'],

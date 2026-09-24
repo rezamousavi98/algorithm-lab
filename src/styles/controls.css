@@ -1,0 +1,354 @@
+.button {
+  display: inline-flex;
+  flex: 0 0 auto;
+  height: 39px;
+  min-width: 88px;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  padding: 0 13px;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  background: linear-gradient(180deg, #151a2a, #101422);
+  color: #e3e6f2;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+:root[data-theme='light'] .button {
+  border-color: #d7ddea;
+  background: #fff;
+  color: #26314b;
+}
+
+.button:hover {
+  border-color: #5149bd;
+}
+
+.button.primary {
+  min-width: 105px;
+  border-color: #6558fa;
+  background: linear-gradient(135deg, #6252ff, #4735db);
+  box-shadow: 0 4px 15px #5242f044;
+  color: white;
+}
+
+.button.generate {
+  min-width: 132px;
+}
+
+.control-select {
+  position: relative;
+  display: flex;
+  flex: 1 1 118px;
+  min-width: 112px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  height: 39px;
+  padding: 0 8px 0 11px;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  color: #dce0f0;
+  font-size: 11px;
+}
+
+.control-select span {
+  white-space: nowrap;
+}
+
+.control-select select {
+  width: 66px;
+  appearance: none;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 7px 22px 7px 9px;
+  outline: 0;
+  background: #111626;
+  color: #e1e5f3;
+  font-size: 11px;
+}
+
+:root[data-theme='light'] .control-select select {
+  border-color: #d7ddea;
+  background: #f8f9fd;
+  color: #26314b;
+}
+
+.control-select > svg {
+  position: absolute;
+  right: 14px;
+  pointer-events: none;
+  color: #aab1c7;
+}
+
+.playback-buttons {
+  display: flex;
+  flex: 1 1 auto;
+  gap: 6px;
+}
+
+.playback-buttons .button {
+  min-width: 0;
+  padding-inline: 9px;
+}
+
+.playback-buttons .button:disabled {
+  opacity: .45;
+  cursor: not-allowed;
+}
+
+.execution-error {
+  margin: 14px 0;
+  padding: 16px;
+  border: 1px solid #853f56;
+  border-radius: 8px;
+  background: #2a1620;
+  color: #ffb0c1;
+  font-size: 13px;
+}
+
+.dataset-controls {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  min-height: 49px;
+  padding: 5px 8px;
+  border-top: 0;
+  margin-top: 8px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: #0d111b;
+}
+
+.dataset-controls .control-select {
+  flex: 0 1 170px;
+}
+
+.dataset-controls select {
+  max-width: 112px;
+  width: 100%;
+  padding-right: 24px;
+}
+
+.dataset-controls .button {
+  height: 35px;
+}
+
+.dataset-controls .input-mode-button {
+  min-width: 112px;
+}
+
+.control-select .select-caret {
+  position: absolute;
+  right: 13px;
+  color: #aab1c7;
+  pointer-events: none;
+  font-size: 12px;
+}
+
+.manual-input-panel {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 8px;
+  padding: 10px;
+  border: 1px solid var(--border);
+  border-top: 0;
+  background: var(--card);
+}
+
+.manual-input-panel label {
+  color: #c2c9dc;
+  font-size: 11px;
+}
+
+.manual-input-panel textarea {
+  min-width: 0;
+  resize: vertical;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 8px 10px;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--mono);
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.manual-input-panel .button {
+  min-width: 96px;
+  height: 36px;
+}
+
+.input-error {
+  grid-column: 2;
+  margin: -2px 0 0;
+  color: #ff8296;
+  font-size: 10px;
+}
+
+.input-hint {
+  grid-column: 2 / -1;
+  color: #78839e;
+  font-size: 9px;
+}
+
+.workspace-actions {
+  display: grid;
+  gap: 8px;
+  padding: 9px;
+  border: 1px solid var(--border);
+  border-radius: 11px;
+  background: #0c1019;
+}
+
+.compact-playback {
+  display: grid;
+  gap: 7px;
+}
+
+.compact-playback .playback-buttons {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 5px;
+}
+
+.compact-playback .playback-buttons .button {
+  width: 100%;
+  height: 34px;
+  min-width: 0;
+  padding: 0;
+}
+
+.compact-playback .compact-action-label {
+  display: none;
+}
+
+.compact-playback .speed-select {
+  width: 100%;
+  min-width: 0;
+  flex: initial;
+  height: 34px;
+}
+
+.compact-playback .speed-select select {
+  width: auto;
+  flex: 0 0 92px;
+}
+
+.workspace-actions .dataset-controls {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+.workspace-actions .dataset-controls .control-select {
+  min-width: 0;
+  height: 34px;
+  gap: 4px;
+  padding: 0 5px;
+  font-size: 9px;
+}
+
+.workspace-actions .dataset-controls select {
+  width: auto;
+  min-width: 0;
+  max-width: 84px;
+  flex: 1 1 auto;
+  padding: 6px 15px 6px 5px;
+  font-size: 9px;
+}
+
+.workspace-actions .dataset-controls .select-caret {
+  right: 8px;
+  font-size: 10px;
+}
+
+.workspace-actions .dataset-controls .button {
+  width: 100%;
+  min-width: 0;
+  height: 33px;
+  gap: 5px;
+  padding: 0 6px;
+  font-size: 10px;
+}
+
+.workspace-actions .manual-input-panel {
+  grid-template-columns: 1fr auto;
+  padding: 8px 0 0;
+  border: 0;
+  border-top: 1px solid var(--border);
+  background: transparent;
+}
+
+.workspace-actions .manual-input-panel label {
+  grid-column: 1 / -1;
+}
+
+.workspace-actions .manual-input-panel textarea {
+  grid-column: 1 / -1;
+}
+
+.workspace-actions .manual-input-panel .input-hint {
+  grid-column: 1 / -1;
+}
+
+.workspace-actions .manual-input-panel .input-error {
+  grid-column: 1 / -1;
+}
+
+.workspace-actions .manual-input-panel .button {
+  grid-column: 2;
+}
+
+:root[data-theme='light'] .workspace-actions {
+  border-color: #dce1ec;
+  background: #fff;
+}
+
+:root[data-theme='light'] .dataset-controls {
+  border-color: #dce1ec;
+  background: #fff;
+}
+
+:root[data-theme='light'] .button:hover {
+  border-color: #8879ea;
+  background: #faf9ff;
+}
+
+:root[data-theme='light'] .button.primary {
+  border-color: #5c48e6;
+  background: linear-gradient(135deg, #6f5aff, #5540dc);
+  color: #fff;
+}
+
+:root[data-theme='light'] .control-select {
+  border-color: #d7ddea;
+  color: #4b5670;
+}
+
+:root[data-theme='light'] .manual-input-panel {
+  border-color: #dce1ec;
+  background: #fff;
+}
+
+:root[data-theme='light'] .manual-input-panel label {
+  color: #3c4864;
+}
+
+:root[data-theme='light'] .manual-input-panel textarea {
+  border-color: #d7ddea;
+  background: #fbfcff;
+  color: #202944;
+}
+
+:root[data-theme='light'] .input-hint {
+  color: #65708a;
+}

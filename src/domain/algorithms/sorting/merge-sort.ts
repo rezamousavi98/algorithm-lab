@@ -94,6 +94,8 @@ function* execute(input: SortingInput): Generator<AlgorithmEvent, void, undefine
 
 export const mergeSort = defineSortingAlgorithm({
   id: 'merge-sort',
+  shortDescription: 'Divide and conquer',
+  displayOrder: 1,
   name: 'Merge Sort',
   description: 'Divides the array into halves, sorts each half, then merges them in order.',
   useCases: ['Stable sorting', 'Large inputs that need predictable O(n log n) time'],

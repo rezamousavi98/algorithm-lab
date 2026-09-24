@@ -31,6 +31,13 @@
   --input: #1d2633;
   --ring: #8067ff;
   --radius: 0.7rem;
+  --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --algorithm-comparing: #ff9e42;
+  --algorithm-pivot: #ed3f78;
+  --algorithm-swapping: #7956ff;
+  --algorithm-selected: #b17bff;
+  --algorithm-sorted: #20c997;
+  --algorithm-unsorted: #747f9f;
 
   color-scheme: dark;
 }
@@ -56,6 +63,7 @@
   --border: #dfe2ef;
   --input: #dfe2ef;
   --ring: #6355e8;
+  --algorithm-unsorted: #8995b2;
   color-scheme: light;
 }
 
@@ -69,9 +77,9 @@ body {
   color: var(--foreground);
 }
 
-button, input, select { font: inherit; }
+button, input, select, textarea { font: inherit; }
 button { color: inherit; }
-button:focus-visible, input:focus-visible, select:focus-visible, a:focus-visible {
+button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible, a:focus-visible {
   outline: 2px solid var(--ring);
   outline-offset: 2px;
 }
