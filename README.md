@@ -8,6 +8,15 @@
 
 # Algorithm Lab
 
+<p align="center">
+  <a href="https://rezamousavi98.github.io/algorithm-lab/">
+    <img
+      src="https://img.shields.io/badge/Live%20Demo-Open%20App-684fff?style=for-the-badge&logo=githubpages&logoColor=white"
+      alt="Open the live Algorithm Lab demo"
+    />
+  </a>
+</p>
+
 An interactive, local-first learning tool for understanding algorithms through visual execution. Explore sorting, array, string, hash-table and tree searching with pseudocode, state, metrics, and replayable step-by-step execution.
 
 ## Getting started
