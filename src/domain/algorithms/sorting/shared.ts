@@ -1,4 +1,4 @@
-import type { AlgorithmDefinition, AlgorithmEvent, PseudocodeLine, SortingInput } from '../types'
+import type { AlgorithmDefinition, AlgorithmEvent, PseudocodeLine, SortingInput, VariableValue } from '../types'
 
 export type SortingExecutor = (input: SortingInput) => Generator<AlgorithmEvent, void, undefined>
 
@@ -24,7 +24,7 @@ export function* emit(
 
 export function* setVariable(
   name: string,
-  value: number | string | boolean | null,
+  value: VariableValue,
 ): Generator<AlgorithmEvent, void, undefined> {
   yield { type: 'variable', name, value }
 }

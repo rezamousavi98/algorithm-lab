@@ -16,14 +16,13 @@ Vite prints the local URL after the development server starts. To check the prod
 ```sh
 npm run build
 npm run lint
-npm run check:domain
 ```
 
 To serve the production build locally, run `npm run build` followed by `npm run preview`.
 
 ## Using the app
 
-- Choose one of the ten sorting algorithms from the left sidebar. The top navigation shows the future algorithm categories; Sorting is the V1 category.
+- Choose one of the twenty sorting algorithms from the left sidebar. The top navigation shows the future algorithm categories; Sorting is the V1 category.
 - Generate random, nearly sorted, reversed, or few-unique data, or enter comma-separated values.
 - Play, pause, step backward or forward, seek through the timeline, adjust playback speed, reset, or jump to the end.
 - Follow the current operation, algorithm variables, pseudocode, operation metrics, and complexity details in the learning inspector.
@@ -55,11 +54,13 @@ Algorithm definitions and registry
 
 Algorithm definitions emit semantic events into a deterministic execution history. The playback hook derives any timeline position from that history, so stepping backward and seeking do not rerun the algorithm. UI components render simulation state without owning algorithm logic or timers.
 
-## V1 scope
+## Current sorting catalog
 
-Included: Bubble, Selection, Insertion, Merge, Quick, Heap, Shell, Counting, Radix, and Cocktail Shaker Sort; generated and manual inputs; deterministic timeline playback; dark/light themes; responsive layout; local preferences; and workspace error recovery.
+The app includes Bubble, Selection, Insertion, Merge, Quick, Heap, Shell, Counting, Radix, Cocktail Shaker, Comb, Gnome, Odd–Even, Cycle, Pancake, Binary Insertion, Bottom-up Merge, Bucket, TimSort, and Introsort.
 
-Searching, graphs, trees, pathfinding, recursion, dynamic programming, accounts, cloud sync, and algorithm races are future scope. V1 does not require a comprehensive test suite. The targeted `check:domain` regression script checks 80 sorting runs, deterministic histories, validation failures, playback transitions and elapsed time, and preference validation. Build and lint are separate checks. Browser interaction and visual verification remain pending.
+Bucket Sort accepts finite numeric values and uses a bounded set of buckets. Counting Sort requires safe integers with a bounded distinct-value range. Radix Sort requires safe integers, including negative values. Each definition provides its own validation and learning metadata.
+
+Searching, graphs, trees, pathfinding, recursion, dynamic programming, accounts, cloud sync, and algorithm races remain future scope. Build and lint checks are available; browser interaction and visual verification should be completed for the expanded catalog.
 
 ## Extension boundaries
 
