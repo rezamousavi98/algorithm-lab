@@ -1,3 +1,11 @@
+<p align="center">
+  <img
+    src="./src/assets/intro.png"
+    alt="Algorithm Lab — Interactive Algorithm Visualization"
+    width="100%"
+  />
+</p>
+
 # Algorithm Lab
 
 An interactive, local-first learning tool for understanding algorithms through visual execution. Explore sorting, array, string, hash-table and tree searching with pseudocode, state, metrics, and replayable step-by-step execution.
