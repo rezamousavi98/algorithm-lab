@@ -1,11 +1,10 @@
-import type { AlgorithmDefinition, AlgorithmEvent, PseudocodeLine, SortingInput, VariableValue } from '../types'
+import type { SortingAlgorithmDefinition, AlgorithmEvent, PseudocodeLine, SortingInput, VariableValue } from '../types'
 
 export type SortingExecutor = (input: SortingInput) => Generator<AlgorithmEvent, void, undefined>
 
-type SortingDefinition = Omit<AlgorithmDefinition<SortingInput, AlgorithmEvent>, 'category' | 'stable' | 'inPlace'> &
-  Readonly<{ stable: boolean; inPlace: boolean }>
+type SortingDefinition = Omit<SortingAlgorithmDefinition, 'category'>
 
-export function defineSortingAlgorithm(definition: SortingDefinition): AlgorithmDefinition<SortingInput, AlgorithmEvent> {
+export function defineSortingAlgorithm(definition: SortingDefinition): SortingAlgorithmDefinition {
   return Object.freeze({
     ...definition,
     category: 'sorting',

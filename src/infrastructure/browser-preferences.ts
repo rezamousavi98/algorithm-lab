@@ -1,8 +1,8 @@
-import { DEFAULT_PREFERENCES, parseUserPreferences, type PreferencesRepository } from '@/domain/preferences/user-preferences'
+import { DEFAULT_PREFERENCES, parseUserPreferences, type PreferenceAlgorithmGroup, type PreferencesRepository } from '@/domain/preferences/user-preferences'
 
 const STORAGE_KEY = 'algorithm-lab-preferences'
 
-export function createBrowserPreferences(isAlgorithmAvailable: (category: 'sorting' | 'searching', id: string) => boolean): PreferencesRepository {
+export function createBrowserPreferences(isAlgorithmAvailable: (category: PreferenceAlgorithmGroup, id: string) => boolean): PreferencesRepository {
   return {
     load() {
       try {

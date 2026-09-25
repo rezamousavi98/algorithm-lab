@@ -43,7 +43,7 @@ function* execute({ values, target }: SearchingInput): Generator<SearchingAlgori
   if (finalIndex < values.length && finalIndex >= 0 && low <= finalIndex && finalIndex <= high) {
     if (yield* inspect(finalIndex, values, target, 'finish')) { yield* found(finalIndex); return }
   }
-  yield* setCandidateRange(values.length, values.length - 1)
+  yield* setCandidateRange(low, low - 1)
   yield* notFound()
 }
 

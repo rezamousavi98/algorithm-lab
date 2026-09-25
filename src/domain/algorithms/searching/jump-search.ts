@@ -31,7 +31,7 @@ function* execute({ values, target }: SearchingInput): Generator<SearchingAlgori
     }
     start = end + 1
     end = Math.min(start + size, values.length) - 1
-    yield* setCandidateRange(start, end)
+    yield* setCandidateRange(start, values.length - 1)
   }
   yield* setCandidateRange(values.length, values.length - 1)
   yield* notFound()

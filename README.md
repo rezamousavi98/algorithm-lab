@@ -1,6 +1,6 @@
 # Algorithm Lab
 
-An interactive, local-first learning tool for understanding algorithms through visual execution. Explore sorting and array searching with pseudocode, state, metrics, and replayable step-by-step execution.
+An interactive, local-first learning tool for understanding algorithms through visual execution. Explore sorting, array searching, and exact string matching with pseudocode, state, metrics, and replayable step-by-step execution.
 
 ## Getting started
 
@@ -22,11 +22,12 @@ To serve the production build locally, run `npm run build` followed by `npm run 
 
 ## Using the app
 
-- Choose Sorting or Searching in the top navigation, then select an algorithm in the sidebar. The remaining categories are marked Soon.
-- Generate random, nearly sorted, reversed, or few-unique data. Sorting accepts comma-separated values; Searching also accepts a finite numeric target and explicit values. Sorted-only search algorithms offer a **Sort a copy** action.
+- Choose Sorting or Searching in the top navigation, then select array or string search in the sidebar. The remaining top-level categories are marked Soon.
+- Array Search accepts a finite numeric target and values; sorted-only algorithms offer **Sort a copy**. String Search accepts text and a pattern, and reports every overlapping match by Unicode code point position.
+- Sorting can generate random, nearly sorted, reversed, or few-unique data, or accept comma-separated values.
 - Play, pause, step backward or forward, seek through the timeline, adjust playback speed, reset, or jump to the end.
 - Follow the current operation, algorithm variables, pseudocode, operation metrics, and complexity details in the learning inspector.
-- Switch between dark and light themes. Theme, speed, array size, category, and each category's selected algorithm are saved in browser local storage.
+- Switch between dark and light themes. Theme, speed, array size, category, search mode, and each search mode's selected algorithm are saved in browser local storage.
 
 Counting Sort accepts safe integers with a bounded distinct-value range. Radix Sort accepts safe integers, including negative values. Input validation displays algorithm-specific constraints before execution.
 
@@ -47,8 +48,9 @@ Algorithm definitions and registry
 - `src/domain/algorithms/` contains shared contracts, the sorting registry, algorithm definitions, input creation, and input validation.
 - `src/domain/simulation/` contains the pure event reducer, execution sessions, snapshots, and derived metrics.
 - `src/domain/preferences/` defines preference validation and a persistence interface; `src/infrastructure/` implements browser storage.
-- `src/features/sorting/` composes sorting input controls, a simulation-state-only visualizer, and synchronized learning panels. `src/features/searching/` owns the distinct search input and workspace.
-- `src/domain/playback/` defines pure playback transitions and the generic timeline interface; `src/features/playback/` owns the timer and keyboard adapter.
+- `src/features/sorting/` composes sorting input controls, a simulation-state-only visualizer, and synchronized learning panels. `src/features/searching/` owns the separate array and string search inputs, workspaces, and state views.
+- `src/domain/playback/` defines pure playback transitions and the generic timeline interface; `src/features/playback/` owns the timer, keyboard adapter, playback controls, and timeline slider.
+- `src/features/workspace/` provides the shared workspace layout, right-side action container, accessible inspector tabs, and learning-content views. Category components supply their own inputs and visualization.
 - `src/styles/` separates shell, controls, visualization, learning, recovery, and responsive styles. Theme and algorithm colors use shared tokens in `src/styles/theme.css`.
 - `src/components/` contains shared UI and workspace recovery components.
 
@@ -60,7 +62,7 @@ The app includes Bubble, Selection, Insertion, Merge, Quick, Heap, Shell, Counti
 
 Bucket Sort accepts finite numeric values and uses a bounded set of buckets. Counting Sort requires safe integers with a bounded distinct-value range. Radix Sort requires safe integers, including negative values. Each definition provides its own validation and learning metadata.
 
-The Searching category includes Linear, Binary, Jump, Exponential, Interpolation, and Fibonacci Search. Linear Search accepts unsorted data; the other five require ascending input. Searches use zero-based indices, accept a finite numeric target, and return any matching index when duplicates exist. Production build and lint pass; manual browser checks have been completed by the user.
+Array Search includes Linear, Binary, Jump, Exponential, Interpolation, and Fibonacci Search. Linear Search accepts unsorted data; the other five require ascending input. It uses zero-based indices and returns any matching index when duplicates exist. String Search includes Naive String Search, Knuth–Morris–Pratt, Boyer–Moore using the bad-character rule, and Rabin–Karp. It uses Unicode code point positions and reports overlapping matches. Production build and lint pass. The user verified the array-search workspace in a browser; browser review of the new string-search workspace is pending.
 
 ## Extension boundaries
 

@@ -5,8 +5,10 @@ import { fibonacciSearch } from './fibonacci-search'
 import { interpolationSearch } from './interpolation-search'
 import { jumpSearch } from './jump-search'
 import { linearSearch } from './linear-search'
+import { stringSearchingAlgorithmRegistry, stringSearchingAlgorithms } from './strings'
 
 export { binarySearch, exponentialSearch, fibonacciSearch, interpolationSearch, jumpSearch, linearSearch }
+export { stringSearchingAlgorithmRegistry, stringSearchingAlgorithms }
 
 export const searchingAlgorithms = Object.freeze([
   linearSearch, binarySearch, jumpSearch, exponentialSearch, interpolationSearch, fibonacciSearch,

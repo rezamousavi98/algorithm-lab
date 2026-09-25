@@ -10,6 +10,7 @@ const pseudocode = makePseudocode([
 
 function* execute(input: SortingInput): Generator<AlgorithmEvent, void, undefined> {
   const values = [...input]
+  if (!values.length) return
   let gap = values.length
   let swapped = true
   while (gap > 1 || swapped) {

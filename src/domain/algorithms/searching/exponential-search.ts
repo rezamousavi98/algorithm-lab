@@ -16,7 +16,7 @@ function* execute({ values, target }: SearchingInput): Generator<SearchingAlgori
   let low = 0
   while (bound < values.length) {
     yield* setSearchVariable('bound', bound)
-    if (yield* inspect(bound, values, target, 'expand')) break
+    if (yield* inspect(bound, values, target, 'expand')) { yield* found(bound); return }
     if (values[bound] > target) break
     low = bound + 1
     yield* setCandidateRange(low, values.length - 1)
@@ -35,7 +35,7 @@ function* execute({ values, target }: SearchingInput): Generator<SearchingAlgori
     yield* setCandidateRange(low, high)
   }
   yield { type: 'pseudocode', lineId: 'finish' }
-  yield* setCandidateRange(values.length, values.length - 1)
+  yield* setCandidateRange(low, low - 1)
   yield* notFound()
 }
 

@@ -21,7 +21,7 @@ function* execute({ values, target }: SearchingInput): Generator<SearchingAlgori
     // Scaling first avoids overflow when finite endpoints have opposite signs.
     const scale = Math.max(Math.abs(values[low]), Math.abs(values[high]), Math.abs(target), 1)
     const fraction = (target / scale - values[low] / scale) / (values[high] / scale - values[low] / scale)
-    const estimate = Math.max(low, Math.min(high, low + Math.floor(fraction * (high - low))))
+    const estimate = Math.max(low, Math.min(high, low + Math.floor((Number.isFinite(fraction) ? fraction : 0.5) * (high - low))))
     yield* setSearchVariable('low', low)
     yield* setSearchVariable('high', high)
     yield* setSearchVariable('probe', estimate)
@@ -32,7 +32,7 @@ function* execute({ values, target }: SearchingInput): Generator<SearchingAlgori
     yield* setCandidateRange(low, high)
   }
   yield { type: 'pseudocode', lineId: 'finish' }
-  yield* setCandidateRange(values.length, values.length - 1)
+  yield* setCandidateRange(low, low - 1)
   yield* notFound()
 }
 

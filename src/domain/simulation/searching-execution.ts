@@ -1,3 +1,5 @@
+import { cloneVariableValue } from './variable-value'
+import { validateSearchingInput } from '../algorithms/searching/shared'
 import type { SearchingAlgorithmDefinition, SearchingAlgorithmEvent, SearchingInput, SearchingVisualizationState } from '../algorithms/types'
 import { isSearchingEvent, createInitialSearchingState, reduceSearchingEvent } from './searching-reducer'
 
@@ -18,9 +20,7 @@ function fail(code: Extract<SearchingExecutionResult, { ok: false }>['error']['c
 }
 
 function freezeEvent(event: SearchingAlgorithmEvent): SearchingAlgorithmEvent {
-  if (event.type === 'variable' && Array.isArray(event.value)) return Object.freeze({ ...event, value: Object.freeze([...event.value]) })
-  if (event.type === 'variable' && typeof event.value === 'object' && event.value !== null) return Object.freeze({ ...event, value: Object.freeze({ ...event.value }) })
-  return Object.freeze({ ...event })
+  return Object.freeze(event.type === 'variable' ? { ...event, value: cloneVariableValue(event.value) } : { ...event })
 }
 
 export function createSearchingExecution(
@@ -28,7 +28,7 @@ export function createSearchingExecution(
   input: SearchingInput,
 ): SearchingExecutionResult {
   try {
-    const inputError = definition.validateInput?.(input) ?? null
+    const inputError = validateSearchingInput(input, definition.requiresSortedInput) ?? definition.validateInput?.(input) ?? null
     if (inputError) return fail('invalid-input', inputError)
   } catch (error) {
     return fail('invalid-input', error instanceof Error ? error.message : 'Invalid search input.')
@@ -42,6 +42,7 @@ export function createSearchingExecution(
     for (const rawEvent of definition.execute(stableInput)) {
       if (events.length >= MAX_SEARCH_EVENTS) return fail('event-limit', `Search exceeded the ${MAX_SEARCH_EVENTS} event safety limit.`)
       if (!isSearchingEvent(rawEvent)) return fail('invalid-event', `Unsupported search event at step ${events.length + 1}.`)
+      if (rawEvent.type === 'pseudocode' && !definition.pseudocode.some(line => line.id === rawEvent.lineId)) return fail('invalid-event', 'Unknown pseudocode line.')
       const event = freezeEvent(rawEvent)
       try { state = reduceSearchingEvent(state, event) }
       catch (error) { return fail('invalid-event', error instanceof Error ? `Step ${events.length + 1}: ${error.message}` : 'Invalid search event.') }

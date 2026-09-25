@@ -1,3 +1,4 @@
+import { cloneVariableValue } from './variable-value'
 import type {
   AlgorithmDefinition,
   AlgorithmEvent,
@@ -110,20 +111,6 @@ function isAlgorithmEvent(value: unknown): value is AlgorithmEvent {
     default:
       return false
   }
-}
-
-function cloneVariableValue(value: VariableValue): VariableValue {
-  if (Array.isArray(value)) {
-    return Object.freeze(value.map((item) => cloneVariableValue(item)))
-  }
-  if (isRecord(value)) {
-    return Object.freeze(
-      Object.fromEntries(
-        Object.entries(value).map(([key, item]) => [key, cloneVariableValue(item as VariableValue)]),
-      ),
-    )
-  }
-  return value
 }
 
 function freezeEvent(event: AlgorithmEvent): AlgorithmEvent {
