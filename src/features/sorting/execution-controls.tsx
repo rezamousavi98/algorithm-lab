@@ -2,7 +2,8 @@ import type { SortingVisualizationState } from '@/domain/algorithms/types'
 import type { PlaybackState } from '@/domain/playback/types'
 import { SortingVisualizer } from './sorting-visualizer'
 import { CompletionBanner } from './completion-banner'
-import { ExecutionTimeline, MetricsStrip } from './execution-timeline'
+import { ExecutionTimeline } from '@/features/playback/execution-timeline'
+import { MetricsStrip } from './metrics-strip'
 
 type ExecutionSurfaceProps = Readonly<{
   simulation: SortingVisualizationState

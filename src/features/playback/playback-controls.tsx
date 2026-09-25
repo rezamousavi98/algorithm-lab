@@ -9,7 +9,7 @@ export function PlaybackControls({ playback, onSpeedChange, compact = false }: P
   const playing = state.status === 'playing'
   return <>
     <div className="playback-buttons" role="group" aria-label="Playback controls">
-      <button className="button primary" onClick={playing ? pause : play} aria-label={playing ? 'Pause visualization' : 'Play visualization'}>{playing ? <Pause size={16} fill="currentColor"/> : <Play size={16} fill="currentColor"/>}<span className={compact ? 'compact-action-label' : undefined}>{playing ? 'Pause' : 'Play'}</span></button>
+      <button className="button primary" disabled={playback.totalSteps === 0} onClick={playing ? pause : play} aria-label={playing ? 'Pause visualization' : 'Play visualization'}>{playing ? <Pause size={16} fill="currentColor"/> : <Play size={16} fill="currentColor"/>}<span className={compact ? 'compact-action-label' : undefined}>{playing ? 'Pause' : 'Play'}</span></button>
       <button className="button" onClick={reset} aria-label="Restart visualization"><RotateCcw size={16}/><span className={compact ? 'compact-action-label' : undefined}>Reset</span></button>
       <button className="button step-control" onClick={stepBackward} disabled={state.currentStep === 0} aria-label="Previous step"><StepBack size={16}/><span className={compact ? 'compact-action-label' : undefined}>Previous</span></button>
       <button className="button step-control" onClick={stepForward} disabled={state.currentStep >= playback.totalSteps} aria-label="Next step"><StepForward size={16}/><span className={compact ? 'compact-action-label' : undefined}>Next</span></button>

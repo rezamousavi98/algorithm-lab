@@ -7,7 +7,7 @@ export function usePlaybackShortcuts(status: PlaybackState['status'], send: (act
       const target = event.target
       if (
         event.altKey || event.ctrlKey || event.metaKey || event.shiftKey ||
-        (target instanceof HTMLElement && target.closest('input, select, textarea, button, a, [contenteditable="true"]'))
+        (target instanceof HTMLElement && target.closest('input, select, textarea, button, a, [role="list"], [contenteditable="true"]'))
       ) return
 
       if (event.code === 'Space') {

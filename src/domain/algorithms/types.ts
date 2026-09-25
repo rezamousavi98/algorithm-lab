@@ -179,16 +179,89 @@ export type AlgorithmDefinition<
   displayOrder: number
   useCases: readonly string[]
   complexity: Complexity
-  stable: boolean
-  inPlace: boolean
+  stable?: boolean
+  inPlace?: boolean
   pseudocode: readonly PseudocodeLine[]
   validateInput?: (input: Readonly<TInput>) => string | null
   execute: (input: Readonly<TInput>) => Iterable<TEvent>
 }>
+
+/** Executable sorting definitions always supply sorting properties. */
+export type SortingAlgorithmDefinition = AlgorithmDefinition<SortingInput, AlgorithmEvent> &
+  Readonly<{ category: 'sorting'; stable: boolean; inPlace: boolean }>
 
 /** Educational views do not need access to the executable algorithm. */
 export type AlgorithmLearningContent = Pick<AlgorithmDefinition,
   'id' | 'name' | 'description' | 'useCases' | 'complexity' | 'stable' | 'inPlace' | 'pseudocode'>
 
 export type AlgorithmSummary = Pick<AlgorithmDefinition,
-  'id' | 'name' | 'shortDescription' | 'displayOrder' | 'complexity'>
+  'id' | 'name' | 'shortDescription' | 'displayOrder'> & Readonly<{
+    complexity?: Complexity
+  }>
+
+/** Searching uses shared metadata without inheriting sorting-only properties. */
+export type SearchingAlgorithmDefinition<TEvent extends Readonly<{ type: string }>> = Omit<
+  AlgorithmDefinition<SearchingInput, TEvent>, 'stable' | 'inPlace'
+> & Readonly<{ category: 'searching'; requiresSortedInput: boolean; matchPolicy: 'any-match' }>
+
+export type SearchingInput = Readonly<{ values: readonly number[]; target: number }>
+
+export type SearchingEvent =
+  | Readonly<{ type: 'searchProbe'; index: number }>
+  | Readonly<{ type: 'searchCompare'; index: number; value: number; target: number }>
+  | Readonly<{ type: 'candidateRange'; low: number; high: number }>
+  | Readonly<{ type: 'searchResult'; result: 'found'; index: number }>
+  | Readonly<{ type: 'searchResult'; result: 'not-found' }>
+
+export type SearchingAlgorithmEvent = CoreAlgorithmEvent | SearchingEvent
+
+export type SearchingMetrics = Readonly<{ steps: number; comparisons: number; probes: number }>
+export type SearchingResult =
+  | Readonly<{ status: 'pending' }>
+  | Readonly<{ status: 'found'; index: number }>
+  | Readonly<{ status: 'not-found' }>
+
+export type SearchingVisualizationState = Readonly<{
+  values: readonly number[]
+  target: number
+  activeProbe: number | null
+  candidateRange: readonly [low: number, high: number]
+  variables: Readonly<Record<string, VariableValue>>
+  currentMessage: string | null
+  currentPseudocodeLineId: string | null
+  activeEvent: SearchingAlgorithmEvent | null
+  result: SearchingResult
+  metrics: SearchingMetrics
+}>
+
+export type StringSearchingInput = Readonly<{ text: string; pattern: string }>
+export type StringSearchingEvent =
+  | Readonly<{ type: 'stringAlignment'; index: number }>
+  | Readonly<{ type: 'stringCompare'; textIndex: number; patternIndex: number; textChar: string; patternChar: string }>
+  | Readonly<{ type: 'stringHash'; index: number; windowHash: number; patternHash: number }>
+  | Readonly<{ type: 'stringMatch'; index: number }>
+  | Readonly<{ type: 'stringSearchComplete' }>
+export type StringSearchingAlgorithmEvent = CoreAlgorithmEvent | StringSearchingEvent
+export type StringSearchingAlgorithmDefinition = Omit<
+  AlgorithmDefinition<StringSearchingInput, StringSearchingAlgorithmEvent>, 'stable' | 'inPlace'
+>
+export type StringSearchingMetrics = Readonly<{
+  steps: number
+  characterComparisons: number
+  alignments: number
+  hashChecks: number
+}>
+export type StringSearchingResult = Readonly<{ status: 'pending' } | { status: 'completed'; matches: readonly number[] }>
+export type StringSearchingVisualizationState = Readonly<{
+  text: readonly string[]
+  pattern: readonly string[]
+  alignmentIndex: number | null
+  comparedIndices: readonly [textIndex: number, patternIndex: number] | null
+  matches: readonly number[]
+  variables: Readonly<Record<string, VariableValue>>
+  currentMessage: string | null
+  currentPseudocodeLineId: string | null
+  activeEvent: StringSearchingAlgorithmEvent | null
+  result: StringSearchingResult
+  metrics: StringSearchingMetrics
+}>
