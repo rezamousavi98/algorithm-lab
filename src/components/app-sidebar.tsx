@@ -20,9 +20,12 @@ export function AppSidebar({ category, title, algorithms, selectedId, onSelect, 
   const sidebarTitle = title ?? categoryMetadata.sidebarTitle
   return <aside id={`${category}-algorithms`} tabIndex={-1} className="sidebar" aria-label={sidebarTitle}>
     <div className="sidebar-heading"><h2>{sidebarTitle}</h2><span>{algorithms.length}</span></div>
-    {modes.length > 0 && onSearchModeChange && <div className="search-mode-switch" role="group" aria-label="Search input type">
-      {modes.map(mode => <button key={mode.id} className={searchMode === mode.id ? 'selected' : ''} aria-pressed={searchMode === mode.id} onClick={() => onSearchModeChange(mode.id)}>{mode.label}</button>)}
-    </div>}
+    {modes.length > 0 && onSearchModeChange && <label className="search-mode-select" htmlFor="search-mode-select">
+      <span>Algorithm type</span>
+      <select id="search-mode-select" value={searchMode} onChange={event => onSearchModeChange(event.target.value as SearchMode)}>
+        {modes.map(mode => <option key={mode.id} value={mode.id}>{mode.label}</option>)}
+      </select>
+    </label>}
     <nav className="algorithm-nav" aria-label={`Choose a ${category} algorithm`}>
       {algorithms.map((algorithm, index) => <button key={algorithm.id} className={`algorithm-nav-item ${selectedId === algorithm.id ? 'selected' : ''}`} aria-current={selectedId === algorithm.id ? 'page' : undefined} onClick={() => onSelect(algorithm.id)}>
         <span className={`algorithm-nav-icon mini-${index % 4}`}><BarChart3 size={20}/></span>

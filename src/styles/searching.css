@@ -28,9 +28,9 @@
 .search-result.not-found { color: var(--search-probe-color); }
 .search-metrics { display: flex; flex-wrap: wrap; gap: 12px; color: var(--muted-foreground); font-size: 11px; }
 .search-metrics b { margin-left: 4px; color: var(--foreground); }
-.search-mode-switch { display: grid; grid-template-columns: repeat(auto-fit, minmax(58px, 1fr)); gap: 4px; margin: 4px 2px 2px; padding: 4px; border: 1px solid var(--border); border-radius: 8px; background: var(--background); }
-.search-mode-switch button { min-width: 0; padding: 7px 8px; border: 0; border-radius: 5px; background: transparent; color: var(--muted-foreground); font-size: 11px; cursor: pointer; }
-.search-mode-switch button.selected { background: var(--accent); color: var(--accent-foreground); box-shadow: inset 0 -2px var(--primary-highlight); }
+.search-mode-select { display: grid; gap: 5px; min-width: 0; margin: 5px 2px 7px; color: var(--muted-foreground); font-size: 10px; }
+.search-mode-select select { width: 100%; min-width: 0; height: 38px; padding: 0 10px; border: 1px solid var(--border); border-radius: 7px; background: var(--card); color: var(--foreground); font: inherit; cursor: pointer; }
+.search-mode-select select:focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; }
 .string-input-form { display: grid; grid-template-columns: minmax(0, 1fr) minmax(150px, .45fr) auto; gap: 8px; align-items: end; margin-top: 9px; flex: 0 0 auto; }
 .string-input-form label { display: grid; gap: 4px; min-width: 0; color: var(--muted-foreground); font-size: 11px; }
 .string-input-form input, .string-input-form textarea { width: 100%; min-width: 0; resize: vertical; padding: 8px 10px; border: 1px solid var(--border); border-radius: 6px; background: var(--card); color: var(--foreground); font: inherit; }
