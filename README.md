@@ -9,7 +9,7 @@
 # Algorithm Lab
 
 <p align="center">
-  <a href="https://rezamousavi98.github.io/algorithm-lab/">
+  <a href="https://rezamousavi98.github.io/algorithm-lab/" target="_blank">
     <img
       src="https://img.shields.io/badge/Live%20Demo-Open%20App-684fff?style=for-the-badge&logo=githubpages&logoColor=white"
       alt="Open the live Algorithm Lab demo"
