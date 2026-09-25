@@ -2,13 +2,13 @@ export type PreferenceAlgorithmGroup = 'sorting' | 'searching' | 'string-searchi
 export type EnabledCategory = 'sorting' | 'searching'
 export type SearchMode = 'array' | 'string' | 'hash' | 'tree'
 export const ENABLED_CATEGORIES: readonly EnabledCategory[] = Object.freeze(['sorting', 'searching'])
-export const ENABLED_SEARCH_MODES: readonly SearchMode[] = Object.freeze(['array', 'string', 'hash'])
+export const ENABLED_SEARCH_MODES: readonly SearchMode[] = Object.freeze(['array', 'string', 'hash', 'tree'])
 
 export function isEnabledCategory(id: string): id is EnabledCategory {
   return ENABLED_CATEGORIES.includes(id as EnabledCategory)
 }
 
-export function isEnabledSearchMode(id: string): id is 'array' | 'string' | 'hash' {
+export function isEnabledSearchMode(id: string): id is 'array' | 'string' | 'hash' | 'tree' {
   return ENABLED_SEARCH_MODES.includes(id as SearchMode)
 }
 

@@ -1,6 +1,6 @@
 # Algorithm Lab
 
-An interactive, local-first learning tool for understanding algorithms through visual execution. Explore sorting, array searching, and exact string matching with pseudocode, state, metrics, and replayable step-by-step execution.
+An interactive, local-first learning tool for understanding algorithms through visual execution. Explore sorting, array, string, hash-table and tree searching with pseudocode, state, metrics, and replayable step-by-step execution.
 
 ## Getting started
 
@@ -22,8 +22,9 @@ To serve the production build locally, run `npm run build` followed by `npm run 
 
 ## Using the app
 
-- Choose Sorting or Searching in the top navigation, then select array or string search in the sidebar. The remaining top-level categories are marked Soon.
+- Choose Sorting or Searching in the top navigation, then select Arrays, Strings, Hash Tables or Trees in the sidebar. The remaining top-level categories are marked Soon.
 - Array Search accepts a finite numeric target and values; sorted-only algorithms offer **Sort a copy**. String Search accepts text and a pattern, and reports every overlapping match by Unicode code point position. Hash Tables builds a table from safe-integer `key:value` pairs before lookup; Separate Chaining, Linear Probing and Double Hashing show collisions and lookup probes.
+- Tree Search offers Binary Search Tree Lookup, preorder Depth-First Search and level-order Breadth-First Search. BST insertion order determines its shape; general trees use `key:value` tokens in level order with `null` child slots. Duplicate keys return the first match in the selected traversal.
 - Sorting can generate random, nearly sorted, reversed, or few-unique data, or accept comma-separated values.
 - Play, pause, step backward or forward, seek through the timeline, adjust playback speed, reset, or jump to the end.
 - Follow the current operation, algorithm variables, pseudocode, operation metrics, and complexity details in the learning inspector.

@@ -10,13 +10,13 @@ export type BinaryTreeNode = Readonly<{
   leftId: string | null
   rightId: string | null
 }>
-export type BinaryTree = Readonly<{
-  kind: 'binary-tree'
+export type BinaryTreeShape = Readonly<{
   rootId: string | null
   nodes: readonly BinaryTreeNode[]
   nodeById: Readonly<Record<string, BinaryTreeNode>>
 }>
-export type BinarySearchTree = BinaryTree & Readonly<{ kind: 'bst' }>
+export type BinaryTree = BinaryTreeShape & Readonly<{ kind: 'binary-tree' }>
+export type BinarySearchTree = BinaryTreeShape & Readonly<{ kind: 'bst' }>
 export type SearchableTree = BinaryTree | BinarySearchTree
 export type TreeToken = TreeEntryInput | null
 export type TreeBuildResult<TTree extends SearchableTree = SearchableTree> =

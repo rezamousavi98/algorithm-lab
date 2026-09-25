@@ -98,7 +98,8 @@ export function findTreeNode(tree: SearchableTree, id: string): BinaryTreeNode |
 export function validateBinaryTree(tree: SearchableTree, requireBst = tree.kind === 'bst'): string | null {
   if (!tree || typeof tree !== 'object' || (tree.kind !== 'bst' && tree.kind !== 'binary-tree')) return 'Tree kind is unsupported.'
   if (!Array.isArray(tree.nodes) || tree.nodes.length > MAX_BINARY_TREE_NODES) return 'Tree node list is invalid or exceeds the node limit.'
-  if (tree.rootId === null) return tree.nodes.length === 0 ? null : 'An empty root cannot have nodes.'
+  if (!tree.nodeById || typeof tree.nodeById !== 'object') return 'Tree node lookup must be an object.'
+  if (tree.rootId === null) return tree.nodes.length === 0 && Object.keys(tree.nodeById).length === 0 ? null : 'An empty root cannot have nodes.'
   const byId = new Map<string, BinaryTreeNode>()
   for (const node of tree.nodes) {
     if (!node || typeof node.id !== 'string' || !node.id || byId.has(node.id)) return 'Tree node IDs must be present and unique.'
@@ -112,10 +113,27 @@ export function validateBinaryTree(tree: SearchableTree, requireBst = tree.kind 
     if (childId === null) continue
     if (!byId.has(childId)) return `Node ${node.id} references missing child ${childId}.`
     const count = (parents.get(childId) ?? 0) + 1
-    if (count > 1) return `Node ${childId} has multiple parents.`
     parents.set(childId, count)
   }
+  const colors = new Map<string, 0 | 1 | 2>()
+  for (const startId of byId.keys()) {
+    if (colors.get(startId) === 2) continue
+    const stack: { id: string; exiting: boolean }[] = [{ id: startId, exiting: false }]
+    while (stack.length) {
+      const item = stack.pop()!
+      if (item.exiting) { colors.set(item.id, 2); continue }
+      const color = colors.get(item.id) ?? 0
+      if (color === 1) return `Tree contains a cycle at node ${item.id}.`
+      if (color === 2) continue
+      colors.set(item.id, 1)
+      stack.push({ id: item.id, exiting: true })
+      const node = byId.get(item.id)!
+      if (node.rightId !== null) stack.push({ id: node.rightId, exiting: false })
+      if (node.leftId !== null) stack.push({ id: node.leftId, exiting: false })
+    }
+  }
   if (parents.has(tree.rootId)) return 'Tree root cannot have a parent.'
+  for (const [id, count] of parents) if (count > 1) return `Node ${id} has multiple parents.`
   const seen = new Set<string>()
   const pending: { id: string; min: number | null; max: number | null }[] = [{ id: tree.rootId, min: null, max: null }]
   while (pending.length) {

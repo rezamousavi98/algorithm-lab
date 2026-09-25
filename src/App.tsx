@@ -1,7 +1,7 @@
 import { AppSidebar } from '@/components/app-sidebar'
 import { AppTopbar } from '@/components/app-topbar'
 import { algorithmRegistry } from '@/domain/algorithms/registry'
-import { searchingAlgorithmRegistry, searchingAlgorithms, stringSearchingAlgorithmRegistry, stringSearchingAlgorithms, hashSearchingAlgorithmRegistry, hashSearchingAlgorithms } from '@/domain/algorithms/searching'
+import { searchingAlgorithmRegistry, searchingAlgorithms, stringSearchingAlgorithmRegistry, stringSearchingAlgorithms, hashSearchingAlgorithmRegistry, hashSearchingAlgorithms, treeSearchingAlgorithmRegistry, treeSearchingAlgorithms } from '@/domain/algorithms/searching'
 import { usePreferences } from '@/features/preferences/use-preferences'
 import { WorkspaceComposer } from '@/features/catalog/workspace-composer'
 import { getSearchModeMetadata } from '@/features/catalog/catalog-metadata'
@@ -15,7 +15,7 @@ function isAlgorithmAvailable(group: PreferenceAlgorithmGroup, id: string) {
     case 'searching': return searchingAlgorithmRegistry.get(id) !== undefined
     case 'string-searching': return stringSearchingAlgorithmRegistry.get(id) !== undefined
     case 'hash-searching': return hashSearchingAlgorithmRegistry.get(id) !== undefined
-    case 'tree-searching':
+    case 'tree-searching': return treeSearchingAlgorithmRegistry.get(id) !== undefined
     case 'data-structures':
     case 'data-structure-operations': return false
   }
@@ -31,7 +31,8 @@ export default function App() {
     ? [...searchingAlgorithms].sort((a, b) => a.displayOrder - b.displayOrder)
     : modeMetadata.id === 'string'
       ? [...stringSearchingAlgorithms].sort((a, b) => a.displayOrder - b.displayOrder)
-      : modeMetadata.id === 'hash' ? [...hashSearchingAlgorithms].sort((a, b) => a.displayOrder - b.displayOrder) : []
+      : modeMetadata.id === 'hash' ? [...hashSearchingAlgorithms].sort((a, b) => a.displayOrder - b.displayOrder)
+        : modeMetadata.id === 'tree' ? [...treeSearchingAlgorithms].sort((a, b) => a.displayOrder - b.displayOrder) : []
   const displayedAlgorithms = preferences.category === 'sorting' ? sortingSummaries : algorithms
   const selectedId = preferences.category === 'sorting' ? preferences.lastAlgorithmId
     : modeMetadata.preferenceGroup === 'searching' ? preferences.lastSearchingAlgorithmId

@@ -38,7 +38,7 @@ export function isEnabledCategory(id: AlgorithmCategory): id is EnabledCategory 
   return isPreferenceCategoryEnabled(id)
 }
 
-export function isEnabledSearchMode(id: SearchMode): id is 'array' | 'string' | 'hash' {
+export function isEnabledSearchMode(id: SearchMode): id is 'array' | 'string' | 'hash' | 'tree' {
   return isPreferenceSearchModeEnabled(id)
 }
 

@@ -1,16 +1,19 @@
 import { algorithmRegistry } from '@/domain/algorithms/registry'
 import { searchingAlgorithmRegistry, searchingAlgorithms, stringSearchingAlgorithmRegistry, stringSearchingAlgorithms } from '@/domain/algorithms/searching'
 import { hashSearchingAlgorithmRegistry, hashSearchingAlgorithms } from '@/domain/algorithms/searching/hash'
+import { treeSearchingAlgorithmRegistry, treeSearchingAlgorithms } from '@/domain/algorithms/searching/tree'
 import type { UserPreferences } from '@/domain/preferences/user-preferences'
 import { SearchingCategory } from '@/features/searching/searching-category'
 import { StringSearchingCategory } from '@/features/searching/string-searching-category'
 import { SortingCategory } from '@/features/sorting/sorting-category'
 import { HashSearchingCategory } from '@/features/searching/hash/hash-searching-category'
+import { TreeSearchingCategory } from '@/features/searching/tree/tree-searching-category'
 
 const sortingDefinitions = [...algorithmRegistry.definitions].sort((a, b) => a.displayOrder - b.displayOrder)
 const arraySearchDefinitions = [...searchingAlgorithms].sort((a, b) => a.displayOrder - b.displayOrder)
 const stringSearchDefinitions = [...stringSearchingAlgorithms].sort((a, b) => a.displayOrder - b.displayOrder)
 const hashSearchDefinitions = [...hashSearchingAlgorithms].sort((a, b) => a.displayOrder - b.displayOrder)
+const treeSearchDefinitions = [...treeSearchingAlgorithms].sort((a, b) => a.displayOrder - b.displayOrder)
 
 function SearchingWorkspaceComposer({ preferences, setPreferences }: Props) {
   const speed = preferences.playbackSpeed
@@ -31,7 +34,10 @@ function SearchingWorkspaceComposer({ preferences, setPreferences }: Props) {
       return <HashSearchingCategory key={algorithm.id} algorithm={algorithm} speed={speed} onSpeedChange={onSpeedChange}/>
     }
     case 'tree':
-      return <p className="empty-state">This search mode is not available yet.</p>
+      {
+        const algorithm = treeSearchingAlgorithmRegistry.get(preferences.lastTreeSearchAlgorithmId) ?? treeSearchDefinitions[0]
+        return <TreeSearchingCategory algorithm={algorithm} speed={speed} onSpeedChange={onSpeedChange}/>
+      }
   }
 }
 
