@@ -195,7 +195,9 @@ export type AlgorithmLearningContent = Pick<AlgorithmDefinition,
   'id' | 'name' | 'description' | 'useCases' | 'complexity' | 'stable' | 'inPlace' | 'pseudocode'>
 
 export type AlgorithmSummary = Pick<AlgorithmDefinition,
-  'id' | 'name' | 'shortDescription' | 'displayOrder' | 'complexity'>
+  'id' | 'name' | 'shortDescription' | 'displayOrder'> & Readonly<{
+    complexity?: Complexity
+  }>
 
 /** Searching uses shared metadata without inheriting sorting-only properties. */
 export type SearchingAlgorithmDefinition<TEvent extends Readonly<{ type: string }>> = Omit<

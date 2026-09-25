@@ -23,7 +23,7 @@ To serve the production build locally, run `npm run build` followed by `npm run 
 ## Using the app
 
 - Choose Sorting or Searching in the top navigation, then select array or string search in the sidebar. The remaining top-level categories are marked Soon.
-- Array Search accepts a finite numeric target and values; sorted-only algorithms offer **Sort a copy**. String Search accepts text and a pattern, and reports every overlapping match by Unicode code point position.
+- Array Search accepts a finite numeric target and values; sorted-only algorithms offer **Sort a copy**. String Search accepts text and a pattern, and reports every overlapping match by Unicode code point position. Hash Tables builds a table from safe-integer `key:value` pairs before lookup; Separate Chaining, Linear Probing and Double Hashing show collisions and lookup probes.
 - Sorting can generate random, nearly sorted, reversed, or few-unique data, or accept comma-separated values.
 - Play, pause, step backward or forward, seek through the timeline, adjust playback speed, reset, or jump to the end.
 - Follow the current operation, algorithm variables, pseudocode, operation metrics, and complexity details in the learning inspector.
@@ -62,7 +62,7 @@ The app includes Bubble, Selection, Insertion, Merge, Quick, Heap, Shell, Counti
 
 Bucket Sort accepts finite numeric values and uses a bounded set of buckets. Counting Sort requires safe integers with a bounded distinct-value range. Radix Sort requires safe integers, including negative values. Each definition provides its own validation and learning metadata.
 
-Array Search includes Linear, Binary, Jump, Exponential, Interpolation, and Fibonacci Search. Linear Search accepts unsorted data; the other five require ascending input. It uses zero-based indices and returns any matching index when duplicates exist. String Search includes Naive String Search, Knuth–Morris–Pratt, Boyer–Moore using the bad-character rule, and Rabin–Karp. It uses Unicode code point positions and reports overlapping matches. Production build and lint pass. The user verified the array-search workspace in a browser; browser review of the new string-search workspace is pending.
+Array Search includes Linear, Binary, Jump, Exponential, Interpolation, and Fibonacci Search. Linear Search accepts unsorted data; the other five require ascending input. It uses zero-based indices and returns any matching index when duplicates exist. String Search includes Naive String Search, Knuth–Morris–Pratt, Boyer–Moore using the bad-character rule, and Rabin–Karp. It uses Unicode code point positions and reports overlapping matches. Hash Tables includes Separate Chaining, Linear Probing and Double Hashing lookup. Probes count bucket or slot visits separately from entry-key comparisons; open-addressing views show their strategy-specific probe sequence, wraparound and deleted-slot traversal. Double Hashing's secondary hash controls slot probes and is unrelated to Rabin–Karp's rolling hash. Production build and lint pass. Browser review of the hash workspace and the previously refactored cross-category layout remains pending.
 
 ## Extension boundaries
 

@@ -39,13 +39,11 @@
   flex: 0 0 38px;
 }
 
-.brand-mark svg {
-  width: 36px;
-  fill: var(--primary-highlight);
-}
-
-.brand-mark circle {
-  fill: #7ec6ff;
+.brand-mark img {
+  display: block;
+  width: 38px;
+  height: 38px;
+  object-fit: contain;
 }
 
 .brand strong {

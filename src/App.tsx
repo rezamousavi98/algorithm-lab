@@ -1,44 +1,62 @@
-import { SortingCategory } from '@/features/sorting/sorting-category'
-import { SearchingCategory } from '@/features/searching/searching-category'
 import { AppSidebar } from '@/components/app-sidebar'
 import { AppTopbar } from '@/components/app-topbar'
 import { algorithmRegistry } from '@/domain/algorithms/registry'
-import { searchingAlgorithmRegistry, searchingAlgorithms, stringSearchingAlgorithmRegistry, stringSearchingAlgorithms } from '@/domain/algorithms/searching'
-import { createBrowserPreferences } from '@/infrastructure/browser-preferences'
+import { searchingAlgorithmRegistry, searchingAlgorithms, stringSearchingAlgorithmRegistry, stringSearchingAlgorithms, hashSearchingAlgorithmRegistry, hashSearchingAlgorithms } from '@/domain/algorithms/searching'
 import { usePreferences } from '@/features/preferences/use-preferences'
-import { StringSearchingCategory } from '@/features/searching/string-searching-category'
+import { WorkspaceComposer } from '@/features/catalog/workspace-composer'
+import { getSearchModeMetadata } from '@/features/catalog/catalog-metadata'
+import { createBrowserPreferences } from '@/infrastructure/browser-preferences'
+import type { PreferenceAlgorithmGroup } from '@/domain/preferences/user-preferences'
 import './App.css'
 
-const preferencesRepository = createBrowserPreferences((category, id) => category === 'sorting'
-  ? algorithmRegistry.get(id) !== undefined
-  : category === 'searching' ? searchingAlgorithmRegistry.get(id) !== undefined : stringSearchingAlgorithmRegistry.get(id) !== undefined)
-const sortingAlgorithms = [...algorithmRegistry.definitions].sort((a, b) => a.displayOrder - b.displayOrder)
-const searchSummaries = [...searchingAlgorithms].sort((a, b) => a.displayOrder - b.displayOrder)
-const stringSearchSummaries = [...stringSearchingAlgorithms].sort((a, b) => a.displayOrder - b.displayOrder)
+function isAlgorithmAvailable(group: PreferenceAlgorithmGroup, id: string) {
+  switch (group) {
+    case 'sorting': return algorithmRegistry.get(id) !== undefined
+    case 'searching': return searchingAlgorithmRegistry.get(id) !== undefined
+    case 'string-searching': return stringSearchingAlgorithmRegistry.get(id) !== undefined
+    case 'hash-searching': return hashSearchingAlgorithmRegistry.get(id) !== undefined
+    case 'tree-searching':
+    case 'data-structures':
+    case 'data-structure-operations': return false
+  }
+}
+
+const preferencesRepository = createBrowserPreferences(isAlgorithmAvailable)
+const sortingSummaries = [...algorithmRegistry.definitions].sort((a, b) => a.displayOrder - b.displayOrder)
 
 export default function App() {
   const { preferences, setPreferences } = usePreferences(preferencesRepository)
-  const category = preferences.category
-  const searchMode = preferences.searchMode
-  const algorithms = category === 'sorting' ? sortingAlgorithms : searchMode === 'array' ? searchSummaries : stringSearchSummaries
-  const sortingAlgorithm = algorithmRegistry.get(preferences.lastAlgorithmId) ?? sortingAlgorithms[0]
-  const searchingAlgorithm = searchingAlgorithmRegistry.get(preferences.lastSearchingAlgorithmId) ?? searchSummaries[0]
-  const stringSearchAlgorithm = stringSearchingAlgorithmRegistry.get(preferences.lastStringSearchAlgorithmId) ?? stringSearchSummaries[0]
-  const selectedId = category === 'sorting' ? sortingAlgorithm.id : searchMode === 'array' ? searchingAlgorithm.id : stringSearchAlgorithm.id
-  const selectAlgorithm = (id: string) => setPreferences(current => category === 'sorting'
-    ? { ...current, lastAlgorithmId: id }
-    : searchMode === 'array' ? { ...current, lastSearchingAlgorithmId: id } : { ...current, lastStringSearchAlgorithmId: id })
-  const onCategoryChange = (next: 'sorting' | 'searching') => setPreferences(current => ({ ...current, category: next }))
-  const onSearchModeChange = (next: 'array' | 'string') => setPreferences(current => ({ ...current, searchMode: next }))
+  const modeMetadata = getSearchModeMetadata(preferences.searchMode)
+  const algorithms = modeMetadata.id === 'array'
+    ? [...searchingAlgorithms].sort((a, b) => a.displayOrder - b.displayOrder)
+    : modeMetadata.id === 'string'
+      ? [...stringSearchingAlgorithms].sort((a, b) => a.displayOrder - b.displayOrder)
+      : modeMetadata.id === 'hash' ? [...hashSearchingAlgorithms].sort((a, b) => a.displayOrder - b.displayOrder) : []
+  const displayedAlgorithms = preferences.category === 'sorting' ? sortingSummaries : algorithms
+  const selectedId = preferences.category === 'sorting' ? preferences.lastAlgorithmId
+    : modeMetadata.preferenceGroup === 'searching' ? preferences.lastSearchingAlgorithmId
+      : modeMetadata.preferenceGroup === 'string-searching' ? preferences.lastStringSearchAlgorithmId
+        : modeMetadata.preferenceGroup === 'hash-searching' ? preferences.lastHashSearchAlgorithmId : preferences.lastTreeSearchAlgorithmId
+
+  function onSelectAlgorithm(id: string) {
+    setPreferences(current => {
+      if (current.category === 'sorting') return { ...current, lastAlgorithmId: id }
+      if (modeMetadata.preferenceGroup === 'searching') return { ...current, lastSearchingAlgorithmId: id }
+      if (modeMetadata.preferenceGroup === 'string-searching') return { ...current, lastStringSearchAlgorithmId: id }
+      if (modeMetadata.preferenceGroup === 'hash-searching') return { ...current, lastHashSearchAlgorithmId: id }
+      return { ...current, lastTreeSearchAlgorithmId: id }
+    })
+  }
+
   return <div className="app-shell">
-    <AppTopbar theme={preferences.theme} category={category} onCategoryChange={onCategoryChange} onThemeToggle={() => setPreferences(current => ({ ...current, theme: current.theme === 'dark' ? 'light' : 'dark' }))}/>
-    <AppSidebar category={category} algorithms={algorithms} selectedId={selectedId} onSelect={selectAlgorithm} searchMode={searchMode} onSearchModeChange={onSearchModeChange}/>
-    <main className="main-area" key={`${category}-${searchMode}`}>
-      {category === 'sorting'
-        ? <SortingCategory algorithm={sortingAlgorithm} arraySize={preferences.arraySize} speed={preferences.playbackSpeed} onSizeChange={arraySize => setPreferences(current => ({ ...current, arraySize }))} onSpeedChange={playbackSpeed => setPreferences(current => ({ ...current, playbackSpeed }))}/>
-        : searchMode === 'array'
-          ? <SearchingCategory algorithm={searchingAlgorithm} arraySize={preferences.arraySize} speed={preferences.playbackSpeed} onSizeChange={arraySize => setPreferences(current => ({ ...current, arraySize }))} onSpeedChange={playbackSpeed => setPreferences(current => ({ ...current, playbackSpeed }))}/>
-          : <StringSearchingCategory algorithm={stringSearchAlgorithm} speed={preferences.playbackSpeed} onSpeedChange={playbackSpeed => setPreferences(current => ({ ...current, playbackSpeed }))}/>}
+    <AppTopbar theme={preferences.theme} category={preferences.category}
+      onCategoryChange={category => setPreferences(current => ({ ...current, category }))}
+      onThemeToggle={() => setPreferences(current => ({ ...current, theme: current.theme === 'dark' ? 'light' : 'dark' }))}/>
+    <AppSidebar category={preferences.category} title={preferences.category === 'searching' ? modeMetadata.sidebarTitle : undefined} algorithms={displayedAlgorithms} selectedId={selectedId}
+      onSelect={onSelectAlgorithm} searchMode={preferences.searchMode}
+      onSearchModeChange={searchMode => setPreferences(current => ({ ...current, searchMode }))}/>
+    <main className="main-area" key={`${preferences.category}-${preferences.searchMode}`}>
+      <WorkspaceComposer preferences={preferences} setPreferences={setPreferences}/>
     </main>
   </div>
 }
