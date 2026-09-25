@@ -179,8 +179,8 @@ export type AlgorithmDefinition<
   displayOrder: number
   useCases: readonly string[]
   complexity: Complexity
-  stable: boolean
-  inPlace: boolean
+  stable?: boolean
+  inPlace?: boolean
   pseudocode: readonly PseudocodeLine[]
   validateInput?: (input: Readonly<TInput>) => string | null
   execute: (input: Readonly<TInput>) => Iterable<TEvent>
@@ -192,3 +192,38 @@ export type AlgorithmLearningContent = Pick<AlgorithmDefinition,
 
 export type AlgorithmSummary = Pick<AlgorithmDefinition,
   'id' | 'name' | 'shortDescription' | 'displayOrder' | 'complexity'>
+
+/** Searching uses shared metadata without inheriting sorting-only properties. */
+export type SearchingAlgorithmDefinition<TEvent extends Readonly<{ type: string }>> = Omit<
+  AlgorithmDefinition<SearchingInput, TEvent>, 'stable' | 'inPlace'
+> & Readonly<{ requiresSortedInput: boolean; matchPolicy: 'any-match' }>
+
+export type SearchingInput = Readonly<{ values: readonly number[]; target: number }>
+
+export type SearchingEvent =
+  | Readonly<{ type: 'searchProbe'; index: number }>
+  | Readonly<{ type: 'searchCompare'; index: number; value: number; target: number }>
+  | Readonly<{ type: 'candidateRange'; low: number; high: number }>
+  | Readonly<{ type: 'searchResult'; result: 'found'; index: number }>
+  | Readonly<{ type: 'searchResult'; result: 'not-found' }>
+
+export type SearchingAlgorithmEvent = CoreAlgorithmEvent | SearchingEvent
+
+export type SearchingMetrics = Readonly<{ steps: number; comparisons: number; probes: number }>
+export type SearchingResult =
+  | Readonly<{ status: 'pending' }>
+  | Readonly<{ status: 'found'; index: number }>
+  | Readonly<{ status: 'not-found' }>
+
+export type SearchingVisualizationState = Readonly<{
+  values: readonly number[]
+  target: number
+  activeProbe: number | null
+  candidateRange: readonly [low: number, high: number]
+  variables: Readonly<Record<string, VariableValue>>
+  currentMessage: string | null
+  currentPseudocodeLineId: string | null
+  activeEvent: SearchingAlgorithmEvent | null
+  result: SearchingResult
+  metrics: SearchingMetrics
+}>

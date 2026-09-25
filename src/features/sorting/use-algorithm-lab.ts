@@ -5,7 +5,7 @@ import { createBrowserPreferences } from '@/infrastructure/browser-preferences'
 import { usePreferences } from '../preferences/use-preferences'
 import { useSortingInput } from './use-sorting-input'
 
-const preferencesRepository = createBrowserPreferences((id) => algorithmRegistry.get(id) !== undefined)
+const preferencesRepository = createBrowserPreferences((category, id) => category === 'sorting' && algorithmRegistry.get(id) !== undefined)
 const algorithms = [...algorithmRegistry.definitions].sort((a, b) => a.displayOrder - b.displayOrder)
 
 /** Composes independent preference, input, and execution responsibilities. */

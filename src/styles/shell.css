@@ -331,7 +331,7 @@
 
 .algorithm-nav-item {
   display: grid;
-  grid-template-columns: 34px minmax(0, 1fr) auto;
+  grid-template-columns: 34px minmax(72px, 1fr) minmax(0, 100px);
   align-items: center;
   gap: 9px;
   min-height: 66px;
@@ -391,12 +391,17 @@
 }
 
 .algorithm-nav-complexity {
+  justify-self: end;
+  max-width: 100%;
+  min-width: 0;
+  overflow: hidden;
   padding: 4px 7px;
   border: 1px solid var(--accent-border);
   border-radius: 7px;
   background: var(--accent);
   color: var(--primary-text);
   font-size: 10px;
+  text-overflow: ellipsis;
   white-space: nowrap;
 }
 

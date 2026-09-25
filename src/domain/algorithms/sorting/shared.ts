@@ -2,7 +2,8 @@ import type { AlgorithmDefinition, AlgorithmEvent, PseudocodeLine, SortingInput,
 
 export type SortingExecutor = (input: SortingInput) => Generator<AlgorithmEvent, void, undefined>
 
-type SortingDefinition = Omit<AlgorithmDefinition<SortingInput, AlgorithmEvent>, 'category'>
+type SortingDefinition = Omit<AlgorithmDefinition<SortingInput, AlgorithmEvent>, 'category' | 'stable' | 'inPlace'> &
+  Readonly<{ stable: boolean; inPlace: boolean }>
 
 export function defineSortingAlgorithm(definition: SortingDefinition): AlgorithmDefinition<SortingInput, AlgorithmEvent> {
   return Object.freeze({

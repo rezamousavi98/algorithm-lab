@@ -2,7 +2,7 @@ import { DEFAULT_PREFERENCES, parseUserPreferences, type PreferencesRepository }
 
 const STORAGE_KEY = 'algorithm-lab-preferences'
 
-export function createBrowserPreferences(isAlgorithmAvailable: (id: string) => boolean): PreferencesRepository {
+export function createBrowserPreferences(isAlgorithmAvailable: (category: 'sorting' | 'searching', id: string) => boolean): PreferencesRepository {
   return {
     load() {
       try {
